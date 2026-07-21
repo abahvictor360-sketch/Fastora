@@ -8,8 +8,14 @@ async function run() {
   const payload = await getPayload({ config: configPromise })
   payload.logger.info('Seeding Fastora content...')
 
+  const slugify = (value: string) =>
+    value
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+
   // ── Media ────────────────────────────────────────────────────
-  const lumenBuffer = await generateGradientImage(['#3D5AFE', '#7C3AED'])
+  const lumenBuffer = await generateGradientImage(['#E07A3F', '#C8642F'])
   const lumenCover = await payload.create({
     collection: 'media',
     data: { alt: 'Lumen Skincare social content grid' },
@@ -21,7 +27,7 @@ async function run() {
     },
   })
 
-  const northboundBuffer = await generateGradientImage(['#111113', '#3D5AFE'])
+  const northboundBuffer = await generateGradientImage(['#101014', '#C8642F'])
   const northboundCover = await payload.create({
     collection: 'media',
     data: { alt: 'Northbound Logistics website redesign' },
@@ -33,7 +39,7 @@ async function run() {
     },
   })
 
-  const postHeroBuffer = await generateGradientImage(['#7C3AED', '#3D5AFE'])
+  const postHeroBuffer = await generateGradientImage(['#D9773D', '#101014'])
   const postHero = await payload.create({
     collection: 'media',
     data: { alt: 'Social media growth strategy' },
@@ -236,13 +242,14 @@ async function run() {
       collection: 'services',
       data: {
         title: service.title,
+        slug: slugify(service.title),
         summary: service.summary,
         order: service.order,
         featuredOnHome: true,
         problem: richTextFromParagraphs([service.problem]),
         approach: richTextFromParagraphs([service.approach]),
         deliverables: service.deliverables.map((label) => ({ label })),
-        faqs: service.faqs,
+        faqs: service.faqs.map((faq) => ({ question: faq.question, answer: faq.answer })),
         _status: 'published',
       },
     })
@@ -281,6 +288,7 @@ async function run() {
     collection: 'case-studies',
     data: {
       title: 'From sporadic posts to a 3x engagement engine',
+      slug: 'lumen-skincare-engagement-engine',
       summary:
         'Lumen Skincare had beautiful products but flat social engagement. We rebuilt their content system from the ground up.',
       clientName: 'Lumen Skincare',
@@ -308,6 +316,7 @@ async function run() {
     collection: 'case-studies',
     data: {
       title: 'A website rebuilt for speed and conversions',
+      slug: 'northbound-website-rebuild',
       summary:
         "Northbound's old site was slow and losing leads. We rebuilt it for speed, and conversions followed.",
       clientName: 'Northbound Logistics',
@@ -334,13 +343,14 @@ async function run() {
   // ── Insights (blog) ──────────────────────────────────────────
   const category = await payload.create({
     collection: 'categories',
-    data: { title: 'Social Media Strategy' },
+    data: { title: 'Social Media Strategy', slug: 'social-media-strategy' },
   })
 
   await payload.create({
     collection: 'posts',
     data: {
       title: "Why Posting More Isn't the Same as Growing Faster",
+      slug: 'posting-more-vs-growing-faster',
       heroImage: postHero.id,
       categories: [category.id],
       publishedAt: new Date().toISOString(),

@@ -2,32 +2,34 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  /* Daylight Velocity design tokens */
-  --background: #fafaf8;
-  --foreground: #111113;
+  /* Fastora — "Nightshift" agency design tokens (dark, terracotta accent) */
+  --background: #08080a;
+  --foreground: #eceae4;
 
-  --color-primary: #111113;
-  --color-primary-foreground: #fafaf8;
+  /* Dark elevated sections (hero fallback, footer, stat band) */
+  --color-primary: #101014;
+  --color-primary-foreground: #f4f2ec;
 
-  --color-secondary: #3d5afe;
+  /* Terracotta accent, used for eyebrows, links, highlights, CTAs */
+  --color-secondary: #c8642f;
   --color-secondary-foreground: #ffffff;
 
-  --color-accent: #7c3aed;
-  --color-accent-foreground: #ffffff;
+  --color-accent: #d9773d;
+  --color-accent-foreground: #17110c;
 
-  --color-card: #ffffff;
-  --color-card-foreground: #111113;
+  --color-card: #121216;
+  --color-card-foreground: #eceae4;
 
-  --color-muted: #f1f0ec;
-  --color-muted-foreground: #55545a;
+  --color-muted: #1a1a1f;
+  --color-muted-foreground: #9d9a92;
 
-  --color-border: #e4e2dc;
-  --color-ring: #3d5afe;
+  --color-border: #26262c;
+  --color-ring: #c8642f;
 
-  --color-destructive: #dc2626;
+  --color-destructive: #e5484d;
   --color-destructive-foreground: #ffffff;
 
-  --gradient-velocity: linear-gradient(90deg, #3d5afe 0%, #7c3aed 100%);
+  --gradient-velocity: linear-gradient(90deg, #e07a3f 0%, #c8642f 100%);
 }
 
 @theme inline {
@@ -68,6 +70,10 @@
     background: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    /* Oversized display wordmarks bleed to the edges; never let them
+       introduce a horizontal scrollbar on small screens. */
+    overflow-x: hidden;
   }
 
   h1,
@@ -134,5 +140,113 @@
     .container-page {
       padding-inline: 2.5rem;
     }
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Scroll-driven motion — Mivon-inspired reveal / mask / marquee      */
+/* ------------------------------------------------------------------ */
+@layer utilities {
+  /* Base reveal target. Elements start hidden and animate in when the
+     ScrollReveal observer adds `.reveal-in`. Direction + effect chosen
+     via the [data-reveal] value; stagger via inline --reveal-delay. */
+  [data-reveal] {
+    --reveal-delay: 0ms;
+    --reveal-shift: 32px;
+    opacity: 0;
+    transform: translate3d(0, var(--reveal-shift), 0);
+    transition:
+      opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+      clip-path 1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay);
+    will-change: opacity, transform;
+  }
+
+  [data-reveal="fade"] {
+    --reveal-shift: 0px;
+  }
+
+  [data-reveal="left"] {
+    transform: translate3d(calc(-1 * var(--reveal-shift)), 0, 0);
+  }
+
+  [data-reveal="right"] {
+    transform: translate3d(var(--reveal-shift), 0, 0);
+  }
+
+  [data-reveal="scale"] {
+    --reveal-shift: 0px;
+    transform: scale(0.94);
+  }
+
+  /* Clip-path "line" reveal for big display headings. */
+  [data-reveal="mask"] {
+    --reveal-shift: 0px;
+    clip-path: inset(0 0 100% 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  [data-reveal].reveal-in {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    clip-path: inset(0 0 0 0);
+  }
+
+  /* Infinite marquee track (logos / running headline). */
+  .marquee {
+    display: flex;
+    width: max-content;
+    animation: fastora-marquee 32s linear infinite;
+  }
+
+  .marquee-slow {
+    animation-duration: 55s;
+  }
+
+  .marquee:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes fastora-marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  /* Soft floating accent glow used behind hero / feature cards. */
+  .animate-float {
+    animation: fastora-float 9s ease-in-out infinite;
+  }
+
+  @keyframes fastora-float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(0, -18px, 0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+
+  .marquee,
+  .animate-float {
+    animation: none !important;
   }
 }

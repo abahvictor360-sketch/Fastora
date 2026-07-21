@@ -14,14 +14,15 @@ interface HeaderClientProps {
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data, siteSettings }) => {
   return (
-    <header className="sticky top-0 z-20 border-b border-border bg-background/90 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-border/60 bg-background/70 backdrop-blur-xl">
       <div className="container-page flex items-center justify-between py-5">
         <Link href="/" className="shrink-0">
           <Logo
             loading="eager"
             priority="high"
-            media={siteSettings?.logoLight}
+            media={siteSettings?.logoDark}
             siteName={siteSettings?.siteName}
+            variant="light"
           />
         </Link>
         <HeaderNav data={data} />

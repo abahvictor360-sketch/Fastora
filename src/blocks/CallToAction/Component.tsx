@@ -7,15 +7,28 @@ import { CMSLink } from '@/components/Link'
 
 export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) => {
   return (
-    <div className="container">
-      <div className="bg-card rounded border-border border p-4 flex flex-col gap-8 md:flex-row md:justify-between md:items-center">
-        <div className="max-w-[48rem] flex items-center">
-          {richText && <RichText className="mb-0" data={richText} enableGutter={false} />}
-        </div>
-        <div className="flex flex-col gap-8">
-          {(links || []).map(({ link }, i) => {
-            return <CMSLink key={i} size="lg" {...link} />
-          })}
+    <div className="container py-16 md:py-24">
+      <div
+        data-reveal="scale"
+        className="relative overflow-hidden rounded-[2rem] border border-border bg-card p-10 md:p-16"
+      >
+        {/* accent glow */}
+        <div
+          className="animate-float pointer-events-none absolute -bottom-24 -right-16 h-80 w-80 rounded-full opacity-60 blur-3xl"
+          style={{
+            background:
+              'radial-gradient(circle at center, rgba(200,100,47,0.4), transparent 62%)',
+          }}
+        />
+        <div className="relative z-10 flex flex-col gap-10 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-2xl [&_h2]:text-4xl [&_h2]:font-semibold md:[&_h2]:text-6xl [&_p]:mt-4 [&_p]:text-muted-foreground">
+            {richText && <RichText className="mb-0" data={richText} enableGutter={false} />}
+          </div>
+          <div className="flex shrink-0 flex-col gap-4 sm:flex-row md:flex-col">
+            {(links || []).map(({ link }, i) => {
+              return <CMSLink key={i} size="lg" {...link} />
+            })}
+          </div>
         </div>
       </div>
     </div>

@@ -49,17 +49,88 @@ export const SiteSettings: GlobalConfig = {
               type: 'upload',
               relationTo: 'media',
             },
+          ],
+        },
+        {
+          label: 'Colors',
+          description:
+            'Recolor the entire public website from here. Use hex values (e.g. #C8642F). Leave a field blank to keep its built-in default. Changes apply site-wide after saving.',
+          fields: [
             {
-              name: 'primaryColor',
-              type: 'text',
-              defaultValue: '#111113',
-              admin: { description: 'Hex color. Used for primary text and buttons.' },
+              type: 'row',
+              fields: [
+                {
+                  name: 'accentColor',
+                  type: 'text',
+                  defaultValue: '#C8642F',
+                  admin: {
+                    width: '50%',
+                    description: 'Brand accent — buttons, links, highlights, CTAs.',
+                  },
+                },
+                {
+                  name: 'backgroundColor',
+                  type: 'text',
+                  defaultValue: '#08080A',
+                  admin: { width: '50%', description: 'Page background.' },
+                },
+              ],
             },
             {
-              name: 'accentColor',
-              type: 'text',
-              defaultValue: '#3D5AFE',
-              admin: { description: 'Hex color. Used for links, highlights, and CTAs.' },
+              type: 'row',
+              fields: [
+                {
+                  name: 'textColor',
+                  type: 'text',
+                  defaultValue: '#ECEAE4',
+                  admin: { width: '50%', description: 'Body text color.' },
+                },
+                {
+                  name: 'surfaceColor',
+                  type: 'text',
+                  defaultValue: '#121216',
+                  admin: { width: '50%', description: 'Cards and raised surfaces.' },
+                },
+              ],
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'borderColor',
+                  type: 'text',
+                  defaultValue: '#26262C',
+                  admin: { width: '50%', description: 'Borders and dividers.' },
+                },
+                {
+                  name: 'mutedTextColor',
+                  type: 'text',
+                  defaultValue: '#9D9A92',
+                  admin: { width: '50%', description: 'Secondary / muted text.' },
+                },
+              ],
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  // Reuses the existing `primary_color` column.
+                  name: 'primaryColor',
+                  type: 'text',
+                  defaultValue: '#101014',
+                  label: 'Dark panel background',
+                  admin: {
+                    width: '50%',
+                    description: 'Hero, footer, and feature bands.',
+                  },
+                },
+                {
+                  name: 'darkPanelTextColor',
+                  type: 'text',
+                  defaultValue: '#F4F2EC',
+                  admin: { width: '50%', description: 'Text on dark panels.' },
+                },
+              ],
             },
           ],
         },

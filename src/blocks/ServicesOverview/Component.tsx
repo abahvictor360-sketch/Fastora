@@ -26,43 +26,62 @@ export const ServicesOverviewBlock: React.FC<ServicesOverviewBlockProps> = async
   if (!services?.length) return null
 
   return (
-    <section className="container py-20 md:py-28">
-      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          {eyebrow && (
-            <p className="text-sm font-medium uppercase tracking-wide text-secondary">{eyebrow}</p>
-          )}
-          {heading && (
-            <h2 className="mt-2 max-w-xl text-3xl font-semibold md:text-4xl">{heading}</h2>
-          )}
-        </div>
-        <Link
-          href="/services"
-          className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
-        >
-          View all services →
-        </Link>
-      </div>
-
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {services.map((service) => (
+    <section className="bg-primary text-primary-foreground">
+      <div className="container py-20 md:py-28">
+        <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div data-reveal="up">
+            {eyebrow && (
+              <span className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-wide text-secondary">
+                <span className="h-1.5 w-1.5 rounded-full bg-secondary" />
+                {eyebrow}
+              </span>
+            )}
+            {heading && (
+              <h2 className="mt-3 max-w-xl text-3xl font-semibold md:text-5xl">{heading}</h2>
+            )}
+          </div>
           <Link
-            key={service.id}
-            href={`/services/${service.slug}`}
-            className="group flex flex-col justify-between rounded-2xl border border-border bg-card p-6 transition-colors hover:border-secondary"
+            href="/services"
+            data-reveal="up"
+            className="group inline-flex items-center gap-2 text-sm font-medium text-primary-foreground/70 transition-colors hover:text-primary-foreground"
           >
-            <div>
-              {service.icon && typeof service.icon === 'object' && (
-                <Media resource={service.icon} imgClassName="h-9 w-9 object-contain" htmlElement={null} />
-              )}
-              <h3 className="mt-5 text-xl font-semibold">{service.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{service.summary}</p>
-            </div>
-            <span className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-secondary opacity-0 transition-opacity group-hover:opacity-100">
-              Learn more →
-            </span>
+            View all services
+            <span className="transition-transform group-hover:translate-x-1">→</span>
           </Link>
-        ))}
+        </div>
+
+        <div className="mt-12 grid gap-px overflow-hidden rounded-3xl border border-primary-foreground/10 bg-primary-foreground/10 sm:grid-cols-2 lg:grid-cols-2" data-reveal-group="90">
+          {services.map((service, i) => (
+            <Link
+              key={service.id}
+              href={`/services/${service.slug}`}
+              data-reveal="up"
+              className="group relative flex flex-col justify-between gap-10 bg-primary p-8 transition-colors hover:bg-card md:p-10"
+            >
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  {service.icon && typeof service.icon === 'object' && (
+                    <Media
+                      resource={service.icon}
+                      imgClassName="h-9 w-9 object-contain"
+                      htmlElement={null}
+                    />
+                  )}
+                  <h3 className="mt-6 text-2xl font-semibold">{service.title}</h3>
+                  <p className="mt-3 max-w-sm text-sm text-primary-foreground/60">
+                    {service.summary}
+                  </p>
+                </div>
+                <span className="font-display text-5xl font-semibold text-primary-foreground/15 transition-colors group-hover:text-secondary md:text-6xl">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              </div>
+              <span className="inline-flex items-center gap-1 text-sm font-medium text-secondary opacity-0 transition-opacity group-hover:opacity-100">
+                Learn more →
+              </span>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   )

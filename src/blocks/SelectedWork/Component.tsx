@@ -28,35 +28,41 @@ export const SelectedWorkBlock: React.FC<SelectedWorkBlockProps> = async ({
   return (
     <section className="container py-20 md:py-28">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
+        <div data-reveal="up">
           {eyebrow && (
-            <p className="text-sm font-medium uppercase tracking-wide text-secondary">{eyebrow}</p>
+            <span className="inline-flex items-center gap-2 text-sm font-medium uppercase tracking-wide text-secondary">
+              <span className="h-1.5 w-1.5 rounded-full bg-secondary" />
+              {eyebrow}
+            </span>
           )}
           {heading && (
-            <h2 className="mt-2 max-w-xl text-3xl font-semibold md:text-4xl">{heading}</h2>
+            <h2 className="mt-3 max-w-xl text-3xl font-semibold md:text-5xl">{heading}</h2>
           )}
         </div>
         <Link
           href="/work"
-          className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors"
+          data-reveal="up"
+          className="group inline-flex items-center gap-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
         >
-          View all work →
+          View all work
+          <span className="transition-transform group-hover:translate-x-1">→</span>
         </Link>
       </div>
 
-      <div className="mt-12 grid gap-8 lg:grid-cols-3">
+      <div className="mt-12 grid gap-8 lg:grid-cols-3" data-reveal-group="120">
         {caseStudies.map((study) => (
           <Link
             key={study.id}
             href={`/work/${study.slug}`}
-            className="group overflow-hidden rounded-2xl border border-border bg-card"
+            data-reveal="up"
+            className="group overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-secondary/60"
           >
             <div className="relative aspect-[4/3] overflow-hidden bg-muted">
               {study.coverImage && typeof study.coverImage === 'object' && (
                 <Media
                   resource={study.coverImage}
                   fill
-                  imgClassName="object-cover transition-transform duration-300 group-hover:scale-105"
+                  imgClassName="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               )}
             </div>

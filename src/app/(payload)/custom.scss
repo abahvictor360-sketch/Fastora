@@ -1,0 +1,59 @@
+/* ------------------------------------------------------------------ */
+/*  Fastora admin theme                                                */
+/*  Brand accents layered on top of Payload's default admin styles.    */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --fastora-accent: #c8642f;
+  --fastora-accent-hover: #d9773d;
+}
+
+/* Custom copy block above the login form (see BeforeLogin component). */
+.fastora-login-intro {
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+
+  p {
+    margin: 0 0 0.35rem;
+  }
+
+  b {
+    font-size: 1.05rem;
+  }
+}
+
+/* Accent the primary action buttons (login "Login", "Save", "Publish"). */
+.btn.btn--style-primary,
+.btn--style-primary {
+  background-color: var(--fastora-accent) !important;
+  border-color: var(--fastora-accent) !important;
+  color: #ffffff !important;
+
+  &:hover,
+  &:focus {
+    background-color: var(--fastora-accent-hover) !important;
+    border-color: var(--fastora-accent-hover) !important;
+  }
+}
+
+/* Accent inline links and focused inputs. */
+a:not(.btn) {
+  color: var(--fastora-accent);
+}
+
+.field-type input:focus,
+.field-type textarea:focus,
+.field-type .rs__control--is-focused {
+  border-color: var(--fastora-accent) !important;
+  box-shadow: 0 0 0 1px var(--fastora-accent) !important;
+}
+
+/* Give the login screen a subtle branded backdrop. */
+.template-minimal,
+.login {
+  background-image: radial-gradient(
+    60% 60% at 50% 0%,
+    rgba(200, 100, 47, 0.12),
+    transparent 70%
+  );
+}

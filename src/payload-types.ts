@@ -1758,13 +1758,37 @@ export interface SiteSetting {
   logoDark?: (number | null) | Media;
   favicon?: (number | null) | Media;
   /**
-   * Hex color. Used for primary text and buttons.
+   * Brand accent — buttons, links, highlights, CTAs.
+   */
+  accentColor?: string | null;
+  /**
+   * Page background.
+   */
+  backgroundColor?: string | null;
+  /**
+   * Body text color.
+   */
+  textColor?: string | null;
+  /**
+   * Cards and raised surfaces.
+   */
+  surfaceColor?: string | null;
+  /**
+   * Borders and dividers.
+   */
+  borderColor?: string | null;
+  /**
+   * Secondary / muted text.
+   */
+  mutedTextColor?: string | null;
+  /**
+   * Hero, footer, and feature bands.
    */
   primaryColor?: string | null;
   /**
-   * Hex color. Used for links, highlights, and CTAs.
+   * Text on dark panels.
    */
-  accentColor?: string | null;
+  darkPanelTextColor?: string | null;
   contactEmail?: string | null;
   contactPhone?: string | null;
   address?: string | null;
@@ -1837,8 +1861,14 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   logoLight?: T;
   logoDark?: T;
   favicon?: T;
-  primaryColor?: T;
   accentColor?: T;
+  backgroundColor?: T;
+  textColor?: T;
+  surfaceColor?: T;
+  borderColor?: T;
+  mutedTextColor?: T;
+  primaryColor?: T;
+  darkPanelTextColor?: T;
   contactEmail?: T;
   contactPhone?: T;
   address?: T;

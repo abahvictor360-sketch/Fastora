@@ -2,11 +2,11 @@ import React from 'react'
 
 const BeforeLogin: React.FC = () => {
   return (
-    <div>
+    <div className="fastora-login-intro">
       <p>
-        <b>Welcome to your dashboard!</b>
-        {' This is where site admins will log in to manage your website.'}
+        <b>Welcome back to Fastora.</b>
       </p>
+      <p>Sign in to manage your website content, pages, and brand settings.</p>
     </div>
   )
 }

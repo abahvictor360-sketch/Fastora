@@ -101,6 +101,15 @@ export async function Footer() {
         </div>
       </div>
 
+      <div
+        className="select-none overflow-hidden border-t border-primary-foreground/10 pt-6"
+        aria-hidden="true"
+      >
+        <span className="block bg-gradient-to-b from-primary-foreground/20 to-primary-foreground/[0.03] bg-clip-text text-center text-[22vw] font-bold leading-none tracking-tighter text-transparent">
+          {siteSettings?.siteName || 'Fastora'}
+        </span>
+      </div>
+
       <div className="border-t border-primary-foreground/10">
         <div className="container-page flex flex-col gap-2 py-6 text-xs text-primary-foreground/60 md:flex-row md:items-center md:justify-between">
           <p>{siteSettings?.footerText}</p>
