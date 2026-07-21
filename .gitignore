@@ -36,6 +36,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# Payload default media upload directory (dev fallback; production uses Supabase Storage)
+public/media/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
