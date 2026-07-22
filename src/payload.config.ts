@@ -65,10 +65,16 @@ export default buildConfig({
   admin: {
     components: {
       beforeLogin: ['@/components/BeforeLogin'],
-      beforeDashboard: ['@/components/BeforeDashboard'],
+      Nav: '@/components/AdminNav',
       graphics: {
         Logo: '@/components/Graphics/Logo',
         Icon: '@/components/Graphics/Icon',
+      },
+      views: {
+        dashboard: {
+          Component: '@/components/AdminDashboard',
+          path: '/',
+        },
       },
     },
     importMap: {

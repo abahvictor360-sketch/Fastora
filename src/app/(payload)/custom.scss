@@ -57,3 +57,13 @@ a:not(.btn) {
     transparent 70%
   );
 }
+
+/* Dark page canvas behind the custom Nav + Dashboard so no white shows
+   through at the edges. List/edit views keep Payload's own light content
+   cards, which now sit on a dark frame instead of a white one. */
+html,
+body,
+.template-default,
+.template-default__wrap {
+  background: #0e0c0a;
+}
