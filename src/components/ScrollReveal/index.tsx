@@ -1,5 +1,6 @@
 'use client'
 
+import { usePathname } from 'next/navigation'
 import { useEffect } from 'react'
 
 /**
@@ -16,6 +17,11 @@ import { useEffect } from 'react'
  * All motion is disabled for users who prefer reduced motion.
  */
 export const ScrollReveal = () => {
+  // This component lives in the persistent layout. Re-run on every route change
+  // so newly mounted [data-reveal] elements get observed — otherwise they'd stay
+  // hidden (opacity:0) after client-side navigation.
+  const pathname = usePathname()
+
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduce) return
@@ -78,7 +84,7 @@ export const ScrollReveal = () => {
       revealObserver.disconnect()
       countObserver.disconnect()
     }
-  }, [])
+  }, [pathname])
 
   return null
 }

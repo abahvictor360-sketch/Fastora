@@ -61,11 +61,11 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
         )}
       </button>
 
-      {/* Mobile menu panel */}
+      {/* Mobile menu panel — anchored directly under the sticky header */}
       {open && (
         <div
           id="mobile-menu"
-          className="fixed inset-x-0 top-[73px] z-40 border-b border-border bg-background/95 backdrop-blur-xl md:hidden"
+          className="absolute inset-x-0 top-full z-40 border-b border-border bg-background/95 shadow-xl backdrop-blur-xl md:hidden"
         >
           <ul className="container-page flex flex-col gap-1 py-4">
             {navItems.map(({ link }, i) => (
