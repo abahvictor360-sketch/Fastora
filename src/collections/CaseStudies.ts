@@ -18,7 +18,7 @@ export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
   labels: {
     singular: 'Case Study',
-    plural: 'Case Studies',
+    plural: 'Work',
   },
   access: {
     create: authenticatedNotDemo,

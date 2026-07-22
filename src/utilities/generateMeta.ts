@@ -40,6 +40,9 @@ export const generateMeta = async (args: {
       title,
       url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
     }),
-    title,
+    // `absolute` bypasses the root layout's `%s | Fastora` title template —
+    // without it Next appends the template on top of the suffix we already
+    // added above, producing "Page | Fastora | Fastora".
+    title: { absolute: title },
   }
 }
