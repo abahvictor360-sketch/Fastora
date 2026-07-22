@@ -90,6 +90,10 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI,
+      // Keep per-instance connection count small: Supabase's pooler caps total
+      // clients, and Next.js spins up several parallel workers/serverless
+      // functions that each open their own pool.
+      max: 5,
     },
     // We manage schema changes via committed migrations (src/migrations) instead of
     // dev-time auto-push, which was re-introspecting the DB on every request.

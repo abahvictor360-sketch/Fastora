@@ -1,6 +1,7 @@
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import { NextResponse } from 'next/server'
+import { Resend } from 'resend'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -62,6 +63,34 @@ export async function POST(req: Request) {
         brief,
       },
     })
+
+    // Best-effort admin notification — a failed email must never block the
+    // submission itself, since it's already safely saved in the CMS.
+    if (process.env.RESEND_API_KEY && process.env.ADMIN_NOTIFICATION_EMAIL) {
+      try {
+        const resend = new Resend(process.env.RESEND_API_KEY)
+        await resend.emails.send({
+          from: process.env.RESEND_FROM_EMAIL || 'Fastora <onboarding@resend.dev>',
+          to: process.env.ADMIN_NOTIFICATION_EMAIL,
+          replyTo: email,
+          subject: `New inquiry from ${name}${company ? ` (${company})` : ''}`,
+          text: [
+            `Name: ${name}`,
+            `Email: ${email}`,
+            company ? `Company: ${company}` : null,
+            budgetRange ? `Budget: ${budgetRange}` : null,
+            timeline ? `Timeline: ${timeline}` : null,
+            '',
+            'Brief:',
+            brief,
+          ]
+            .filter(Boolean)
+            .join('\n'),
+        })
+      } catch (emailError) {
+        console.error('Failed to send inquiry notification email:', emailError)
+      }
+    }
 
     return NextResponse.json({ success: true })
   } catch {

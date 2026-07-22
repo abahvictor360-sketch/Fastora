@@ -12,6 +12,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { generateMeta } from '@/utilities/generateMeta'
 import { formatAuthors } from '@/utilities/formatAuthors'
 import { formatDateTime } from '@/utilities/formatDateTime'
+import { getServerSideURL } from '@/utilities/getURL'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -42,8 +43,26 @@ export default async function PostPage({ params }: Args) {
     post.populatedAuthors.length > 0 &&
     formatAuthors(post.populatedAuthors) !== ''
 
+  const url = getServerSideURL()
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.meta?.description,
+    datePublished: post.publishedAt,
+    dateModified: post.updatedAt,
+    ...(hasAuthors ? { author: { '@type': 'Person', name: formatAuthors(post.populatedAuthors!) } } : {}),
+    publisher: { '@type': 'Organization', name: 'Fastora', url },
+    mainEntityOfPage: `${url}/insights/${post.slug}`,
+  }
+
   return (
     <article className="pb-24">
+      {/* eslint-disable-next-line react/no-danger */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
       {draft && <LivePreviewListener />}
 
       <header className="relative overflow-hidden bg-primary text-primary-foreground">

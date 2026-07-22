@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
 import React from 'react'
 import { draftMode } from 'next/headers'
 
@@ -15,16 +15,15 @@ import { buildBrandStyle } from '@/utilities/brandTokens'
 
 import './globals.css'
 
-const inter = Inter({
-  variable: '--font-inter',
+const geistSans = Geist({
+  variable: '--font-geist-sans',
   subsets: ['latin'],
   display: 'swap',
 })
 
-const spaceGrotesk = Space_Grotesk({
-  variable: '--font-space-grotesk',
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
   subsets: ['latin'],
-  weight: ['500', '600', '700'],
   display: 'swap',
 })
 
@@ -33,16 +32,35 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   const siteSettings = await getCachedGlobal('site-settings', 0)()
   const brandStyle = buildBrandStyle(siteSettings)
+  const url = getServerSideURL()
+
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfessionalService',
+    '@id': `${url}/#organization`,
+    name: siteSettings?.siteName || 'Fastora',
+    description: siteSettings?.tagline,
+    url,
+    ...(siteSettings?.contactEmail ? { email: siteSettings.contactEmail } : {}),
+    ...(siteSettings?.contactPhone ? { telephone: siteSettings.contactPhone } : {}),
+    ...(siteSettings?.address ? { address: siteSettings.address } : {}),
+    sameAs: (siteSettings?.socialLinks || []).map((social) => social.url).filter(Boolean),
+  }
 
   return (
     <html
-      className={cn(inter.variable, spaceGrotesk.variable, 'h-full')}
+      className={cn(geistSans.variable, geistMono.variable, 'h-full')}
       lang="en"
       suppressHydrationWarning
     >
       <head>
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         {brandStyle && <style id="fastora-brand-tokens">{brandStyle}</style>}
+        {/* eslint-disable-next-line react/no-danger */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <noscript>
           <style>{`[data-reveal]{opacity:1 !important;transform:none !important;clip-path:none !important}`}</style>
         </noscript>

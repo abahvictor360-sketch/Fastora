@@ -11,6 +11,7 @@ import { Media } from '@/components/Media'
 import { PageHeader } from '@/components/PageHeader'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { generateMeta } from '@/utilities/generateMeta'
+import { getServerSideURL } from '@/utilities/getURL'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -44,8 +45,45 @@ export default async function ServicePage({ params }: Args) {
     where: { relatedService: { in: [service.id] } },
   })
 
+  const url = getServerSideURL()
+  const hasFaqs = Array.isArray(service.faqs) && service.faqs.length > 0
+
+  const serviceJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: service.title,
+    name: service.title,
+    description: service.summary,
+    provider: { '@type': 'ProfessionalService', name: 'Fastora', url },
+    url: `${url}/services/${service.slug}`,
+  }
+
+  const faqJsonLd = hasFaqs
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: service.faqs!.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+        })),
+      }
+    : null
+
   return (
     <article>
+      {/* eslint-disable-next-line react/no-danger */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
+      />
+      {faqJsonLd && (
+        // eslint-disable-next-line react/no-danger
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       {draft && <LivePreviewListener />}
       <PageHeader eyebrow="Service" title={service.title} description={service.summary} />
 

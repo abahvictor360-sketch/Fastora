@@ -3,6 +3,15 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
+    qualities: [75, 100],
+    // No `search` key here on purpose: Payload appends a `?<updatedAt>` cache-busting
+    // query string per image, so we can't pin an exact literal value. Omitting `search`
+    // skips Next's exact-match check entirely and allows any query string on this path.
+    localPatterns: [
+      {
+        pathname: '/api/media/file/**',
+      },
+    ],
     remotePatterns: [
       {
         protocol: 'https',
