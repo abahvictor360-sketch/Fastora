@@ -1,15 +1,15 @@
 import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../access/anyone'
-import { authenticated } from '../access/authenticated'
+import { authenticatedNotDemo } from '../access/authenticatedNotDemo'
 
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
   access: {
-    create: authenticated,
-    delete: authenticated,
+    create: authenticatedNotDemo,
+    delete: authenticatedNotDemo,
     read: anyone,
-    update: authenticated,
+    update: authenticatedNotDemo,
   },
   admin: {
     defaultColumns: ['clientName', 'company', 'updatedAt'],

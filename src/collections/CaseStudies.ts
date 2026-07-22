@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { slugField } from 'payload'
 
-import { authenticated } from '../access/authenticated'
+import { authenticatedNotDemo } from '../access/authenticatedNotDemo'
 import { authenticatedOrPublished } from '../access/authenticatedOrPublished'
 import { populatePublishedAt } from '../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../utilities/generatePreviewPath'
@@ -21,10 +21,10 @@ export const CaseStudies: CollectionConfig = {
     plural: 'Case Studies',
   },
   access: {
-    create: authenticated,
-    delete: authenticated,
+    create: authenticatedNotDemo,
+    delete: authenticatedNotDemo,
     read: authenticatedOrPublished,
-    update: authenticated,
+    update: authenticatedNotDemo,
   },
   defaultPopulate: {
     title: true,

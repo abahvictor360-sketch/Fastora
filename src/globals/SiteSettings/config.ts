@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { authenticated } from '../../access/authenticated'
+import { authenticatedNotDemo } from '../../access/authenticatedNotDemo'
 import { revalidateSiteSettings } from './hooks/revalidateSiteSettings'
 
 export const SiteSettings: GlobalConfig = {
@@ -8,7 +8,7 @@ export const SiteSettings: GlobalConfig = {
   label: 'Site Settings',
   access: {
     read: () => true,
-    update: authenticated,
+    update: authenticatedNotDemo,
   },
   admin: {
     description:

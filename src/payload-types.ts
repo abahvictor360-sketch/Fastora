@@ -449,9 +449,9 @@ export interface User {
   id: number;
   name?: string | null;
   /**
-   * Admins manage everything including team members. Editors manage content only. Add more roles here as needed.
+   * Admins manage everything including team members. Editors manage content. Demo accounts can browse every collection but cannot create, edit, or delete anything — safe to share. Add more roles here as needed.
    */
-  role: 'admin' | 'editor';
+  role: 'admin' | 'editor' | 'demo';
   updatedAt: string;
   createdAt: string;
   email: string;

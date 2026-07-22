@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { authenticated } from '../access/authenticated'
+import { authenticatedNotDemo } from '../access/authenticatedNotDemo'
 
 export const Inquiries: CollectionConfig = {
   slug: 'inquiries',
@@ -12,10 +12,12 @@ export const Inquiries: CollectionConfig = {
     // Inquiries are only ever written by the /api/contact route handler using
     // the Payload Local API with overrideAccess, after server-side validation
     // and a honeypot check. The public REST/GraphQL API cannot create these directly.
-    create: authenticated,
-    read: authenticated,
-    update: authenticated,
-    delete: authenticated,
+    // Demo accounts are excluded from every operation, including read — real
+    // customer contact details shouldn't be visible on a shared demo login.
+    create: authenticatedNotDemo,
+    read: authenticatedNotDemo,
+    update: authenticatedNotDemo,
+    delete: authenticatedNotDemo,
   },
   admin: {
     defaultColumns: ['name', 'company', 'serviceNeeded', 'status', 'createdAt'],

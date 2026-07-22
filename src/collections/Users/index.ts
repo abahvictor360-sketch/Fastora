@@ -32,11 +32,12 @@ export const Users: CollectionConfig = {
       options: [
         { label: 'Admin', value: 'admin' },
         { label: 'Editor', value: 'editor' },
+        { label: 'Demo (read-only)', value: 'demo' },
       ],
       admin: {
         position: 'sidebar',
         description:
-          'Admins manage everything including team members. Editors manage content only. Add more roles here as needed.',
+          'Admins manage everything including team members. Editors manage content. Demo accounts can browse every collection but cannot create, edit, or delete anything — safe to share. Add more roles here as needed.',
       },
       // Only admins can change roles; a user cannot escalate their own role.
       access: {
