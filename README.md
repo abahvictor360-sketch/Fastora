@@ -52,3 +52,5 @@ All variables are documented inline in [`.env.example`](.env.example). The impor
 **Publish a blog post**: `/admin` → Posts → Create New → fill in title, hero image, content, category, tags, and SEO tab → set status to **Published** (top-right) → Save. It's live at `/insights/<slug>` immediately (or use "Schedule publish" to publish later).
 
 **View contact form submissions**: `/admin` → Inquiries.
+
+**Demo login**: `demo@fastora.example` / `FastoraDemo2026!` — safe to share. This account can browse every collection in `/admin` but cannot create, edit, delete, or see Inquiries (verified: write requests return 403). Change the password by editing the user in Users, or add more read-only accounts the same way — just set their role to **Demo (read-only)**.
