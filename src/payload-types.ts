@@ -300,6 +300,15 @@ export interface Post {
   };
   relatedPosts?: (number | Post)[] | null;
   categories?: (number | Category)[] | null;
+  /**
+   * Free-form keywords shown on the post and used for grouping.
+   */
+  tags?:
+    | {
+        tag: string;
+        id?: string | null;
+      }[]
+    | null;
   meta?: {
     title?: string | null;
     /**
@@ -439,6 +448,10 @@ export interface Category {
 export interface User {
   id: number;
   name?: string | null;
+  /**
+   * Admins manage everything including team members. Editors manage content only. Add more roles here as needed.
+   */
+  role: 'admin' | 'editor';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1341,6 +1354,12 @@ export interface PostsSelect<T extends boolean = true> {
   content?: T;
   relatedPosts?: T;
   categories?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
   meta?:
     | T
     | {
@@ -1586,6 +1605,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

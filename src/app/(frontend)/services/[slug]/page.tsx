@@ -1,0 +1,157 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
+import { draftMode } from 'next/headers'
+import { notFound } from 'next/navigation'
+import React, { cache } from 'react'
+
+import RichText from '@/components/RichText'
+import { Media } from '@/components/Media'
+import { PageHeader } from '@/components/PageHeader'
+import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { generateMeta } from '@/utilities/generateMeta'
+
+export async function generateStaticParams() {
+  const payload = await getPayload({ config: configPromise })
+  const services = await payload.find({
+    collection: 'services',
+    draft: false,
+    limit: 1000,
+    overrideAccess: false,
+    pagination: false,
+    select: { slug: true },
+  })
+  return (services.docs || [])
+    .filter((doc) => Boolean(doc.slug))
+    .map(({ slug }) => ({ slug: String(slug) }))
+}
+
+type Args = { params: Promise<{ slug: string }> }
+
+export default async function ServicePage({ params }: Args) {
+  const { isEnabled: draft } = await draftMode()
+  const { slug } = await params
+  const service = await queryServiceBySlug({ slug })
+
+  if (!service) notFound()
+
+  const payload = await getPayload({ config: configPromise })
+  const { docs: testimonials } = await payload.find({
+    collection: 'testimonials',
+    depth: 1,
+    limit: 3,
+    where: { relatedService: { in: [service.id] } },
+  })
+
+  return (
+    <article>
+      {draft && <LivePreviewListener />}
+      <PageHeader eyebrow="Service" title={service.title} description={service.summary} />
+
+      <div className="container grid gap-16 py-20 md:py-28 lg:grid-cols-[1fr_20rem]">
+        <div className="flex flex-col gap-14">
+          {service.problem && (
+            <section data-reveal="up">
+              <h2 className="text-sm font-medium uppercase tracking-wide text-secondary">The problem</h2>
+              <div className="mt-4">
+                <RichText data={service.problem} enableGutter={false} />
+              </div>
+            </section>
+          )}
+
+          {service.approach && (
+            <section data-reveal="up">
+              <h2 className="text-sm font-medium uppercase tracking-wide text-secondary">Our approach</h2>
+              <div className="mt-4">
+                <RichText data={service.approach} enableGutter={false} />
+              </div>
+            </section>
+          )}
+
+          {Array.isArray(service.deliverables) && service.deliverables.length > 0 && (
+            <section data-reveal="up">
+              <h2 className="text-sm font-medium uppercase tracking-wide text-secondary">Deliverables</h2>
+              <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                {service.deliverables.map((d, i) => (
+                  <li key={i} className="flex items-start gap-3 rounded-2xl border border-border bg-card p-4 text-sm">
+                    <span className="mt-0.5 text-secondary">✓</span>
+                    {d.label}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {Array.isArray(service.faqs) && service.faqs.length > 0 && (
+            <section data-reveal="up">
+              <h2 className="text-2xl font-semibold">Frequently asked</h2>
+              <div className="mt-6 divide-y divide-border overflow-hidden rounded-3xl border border-border">
+                {service.faqs.map((faq, i) => (
+                  <details key={i} className="group bg-card p-6 [&_summary]:cursor-pointer">
+                    <summary className="flex items-center justify-between text-base font-medium marker:content-none">
+                      {faq.question}
+                      <span className="text-secondary transition-transform group-open:rotate-45">+</span>
+                    </summary>
+                    <p className="mt-3 text-sm text-muted-foreground">{faq.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+
+        <aside className="flex flex-col gap-8">
+          {service.featuredImage && typeof service.featuredImage === 'object' && (
+            <div className="overflow-hidden rounded-3xl border border-border">
+              <Media resource={service.featuredImage} imgClassName="w-full object-cover" />
+            </div>
+          )}
+
+          {testimonials.length > 0 && (
+            <div className="rounded-3xl border border-border bg-card p-6" data-reveal="up">
+              <p className="text-sm font-medium uppercase tracking-wide text-secondary">What clients say</p>
+              <div className="mt-4 flex flex-col gap-6">
+                {testimonials.map((t) => (
+                  <figure key={t.id}>
+                    <blockquote className="text-sm leading-relaxed">“{t.quote}”</blockquote>
+                    <figcaption className="mt-2 text-xs text-muted-foreground">
+                      {[t.clientName, t.company].filter(Boolean).join(', ')}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <Link
+            href="/contact"
+            className="rounded-full bg-secondary px-6 py-3 text-center text-sm font-semibold text-secondary-foreground transition-opacity hover:opacity-90"
+          >
+            Start a project
+          </Link>
+        </aside>
+      </div>
+    </article>
+  )
+}
+
+export async function generateMetadata({ params }: Args): Promise<Metadata> {
+  const { slug } = await params
+  const service = await queryServiceBySlug({ slug })
+  return generateMeta({ doc: service })
+}
+
+const queryServiceBySlug = cache(async ({ slug }: { slug: string }) => {
+  const { isEnabled: draft } = await draftMode()
+  const payload = await getPayload({ config: configPromise })
+  const result = await payload.find({
+    collection: 'services',
+    draft,
+    limit: 1,
+    pagination: false,
+    overrideAccess: draft,
+    where: { slug: { equals: slug } },
+  })
+  return result.docs?.[0] || null
+})

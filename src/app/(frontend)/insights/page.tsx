@@ -1,0 +1,75 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
+import React from 'react'
+
+import { Media } from '@/components/Media'
+import { PageHeader } from '@/components/PageHeader'
+import { formatDateTime } from '@/utilities/formatDateTime'
+
+export const metadata: Metadata = {
+  title: 'Insights',
+  description: 'Ideas, playbooks, and lessons on building content engines that grow.',
+}
+
+export default async function InsightsPage() {
+  const payload = await getPayload({ config: configPromise })
+  const { docs: posts } = await payload.find({
+    collection: 'posts',
+    depth: 1,
+    limit: 100,
+    sort: '-publishedAt',
+    where: { _status: { equals: 'published' } },
+  })
+
+  return (
+    <div>
+      <PageHeader
+        eyebrow="Insights"
+        title="Playbooks for growing faster"
+        description="Ideas and lessons from building content engines that actually move the numbers."
+      />
+
+      <section className="container pb-24 pt-16">
+        {posts.length ? (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3" data-reveal-group="110">
+            {posts.map((post) => (
+              <Link
+                key={post.id}
+                href={`/insights/${post.slug}`}
+                data-reveal="up"
+                className="group flex flex-col overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-secondary/60"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-muted">
+                  {post.heroImage && typeof post.heroImage === 'object' && (
+                    <Media
+                      resource={post.heroImage}
+                      fill
+                      imgClassName="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  )}
+                </div>
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                    {Array.isArray(post.categories) &&
+                      post.categories.map((c) =>
+                        typeof c === 'object' && c ? <span key={c.id}>{c.title}</span> : null,
+                      )}
+                    {post.publishedAt && <span>· {formatDateTime(post.publishedAt)}</span>}
+                  </div>
+                  <h2 className="mt-3 text-lg font-semibold">{post.title}</h2>
+                  {post.meta?.description && (
+                    <p className="mt-2 text-sm text-muted-foreground">{post.meta.description}</p>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <p className="text-muted-foreground">No insights published yet.</p>
+        )}
+      </section>
+    </div>
+  )
+}

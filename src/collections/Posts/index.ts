@@ -132,6 +132,22 @@ export const Posts: CollectionConfig = {
               hasMany: true,
               relationTo: 'categories',
             },
+            {
+              name: 'tags',
+              type: 'array',
+              admin: {
+                position: 'sidebar',
+                description: 'Free-form keywords shown on the post and used for grouping.',
+              },
+              labels: { singular: 'Tag', plural: 'Tags' },
+              fields: [
+                {
+                  name: 'tag',
+                  type: 'text',
+                  required: true,
+                },
+              ],
+            },
           ],
           label: 'Meta',
         },
