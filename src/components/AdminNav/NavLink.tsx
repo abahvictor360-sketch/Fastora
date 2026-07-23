@@ -4,17 +4,14 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
 
-const ACCENT = '#C8642F'
-const MUTED = '#8A8790'
-const TEXT = '#ECEAE4'
-
 export const NavLink: React.FC<{
   href: string
   label: string
   icon: React.ReactNode
   badge?: number
   exact?: boolean
-}> = ({ href, label, icon, badge, exact }) => {
+  accent: string
+}> = ({ href, label, icon, badge, exact, accent }) => {
   const pathname = usePathname()
   const isActive = exact ? pathname === href : pathname?.startsWith(href)
 
@@ -28,8 +25,8 @@ export const NavLink: React.FC<{
         padding: '9px 12px',
         borderRadius: 8,
         textDecoration: 'none',
-        color: isActive ? '#fff' : TEXT,
-        background: isActive ? ACCENT : 'transparent',
+        color: isActive ? '#fff' : 'var(--theme-text)',
+        background: isActive ? accent : 'transparent',
         fontSize: 13.5,
         fontWeight: isActive ? 600 : 500,
         transition: 'background 0.15s ease',
@@ -55,8 +52,8 @@ export const NavLink: React.FC<{
             fontWeight: 600,
             padding: '1px 7px',
             borderRadius: 999,
-            background: isActive ? 'rgba(255,255,255,0.25)' : 'rgba(200,100,47,0.18)',
-            color: isActive ? '#fff' : ACCENT,
+            background: isActive ? 'rgba(255,255,255,0.25)' : 'var(--theme-elevation-150)',
+            color: isActive ? '#fff' : accent,
           }}
         >
           {badge}

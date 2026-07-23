@@ -1,15 +1,18 @@
 import React from 'react'
 
-const ACCENT = '#C8642F'
-const ACCENT_SOFT = 'rgba(200,100,47,0.16)'
-const GRID = '#2A2A30'
-const MUTED = '#8A8790'
+// Structural chart colors follow Payload's own theme variables, so both
+// light and dark admin themes stay properly contrasted. Only the brand
+// accent (passed in from Site Settings) is a fixed color.
+const GRID = 'var(--theme-elevation-150)'
+const MUTED = 'var(--theme-elevation-500)'
+const TEXT = 'var(--theme-text)'
 
 /** Simple area/line chart for a small time series. No client JS needed — pure SVG. */
-export const AreaChart: React.FC<{ data: { label: string; count: number }[]; height?: number }> = ({
-  data,
-  height = 220,
-}) => {
+export const AreaChart: React.FC<{
+  data: { label: string; count: number }[]
+  accent: string
+  height?: number
+}> = ({ data, accent, height = 220 }) => {
   const width = 640
   const padding = 28
   const max = Math.max(1, ...data.map((d) => d.count))
@@ -28,8 +31,8 @@ export const AreaChart: React.FC<{ data: { label: string; count: number }[]; hei
     <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ display: 'block' }}>
       <defs>
         <linearGradient id="fastora-area-fill" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={ACCENT} stopOpacity="0.35" />
-          <stop offset="100%" stopColor={ACCENT} stopOpacity="0" />
+          <stop offset="0%" stopColor={accent} stopOpacity="0.35" />
+          <stop offset="100%" stopColor={accent} stopOpacity="0" />
         </linearGradient>
       </defs>
       {[0.25, 0.5, 0.75].map((f) => (
@@ -44,9 +47,9 @@ export const AreaChart: React.FC<{ data: { label: string; count: number }[]; hei
         />
       ))}
       <path d={areaPath} fill="url(#fastora-area-fill)" />
-      <path d={linePath} fill="none" stroke={ACCENT} strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
+      <path d={linePath} fill="none" stroke={accent} strokeWidth={2.5} strokeLinejoin="round" strokeLinecap="round" />
       {points.map((p, i) => (
-        <circle key={i} cx={p.x} cy={p.y} r={3.5} fill={ACCENT} />
+        <circle key={i} cx={p.x} cy={p.y} r={3.5} fill={accent} />
       ))}
       {data.map((d, i) => (
         <text
@@ -67,7 +70,8 @@ export const AreaChart: React.FC<{ data: { label: string; count: number }[]; hei
 /** Horizontal set of vertical bars, each with its own percentage-of-max height. */
 export const BarStat: React.FC<{
   items: { label: string; value: number; color?: string }[]
-}> = ({ items }) => {
+  accent: string
+}> = ({ items, accent }) => {
   const max = Math.max(1, ...items.map((i) => i.value))
   return (
     <div style={{ display: 'flex', gap: 20, alignItems: 'flex-end', height: 140 }}>
@@ -83,7 +87,7 @@ export const BarStat: React.FC<{
                 width: 34,
                 height: 96,
                 borderRadius: 8,
-                background: '#232227',
+                background: 'var(--theme-elevation-100)',
                 display: 'flex',
                 alignItems: 'flex-end',
                 overflow: 'hidden',
@@ -93,7 +97,7 @@ export const BarStat: React.FC<{
                 style={{
                   width: '100%',
                   height: `${Math.max(6, pct)}%`,
-                  background: item.color || ACCENT,
+                  background: item.color || accent,
                   borderRadius: 8,
                 }}
               />
@@ -110,11 +114,11 @@ export const BarStat: React.FC<{
 /** Circular progress ring — used for the small metric cards. */
 export const ProgressRing: React.FC<{
   percent: number
-  color?: string
+  color: string
   size?: number
   strokeWidth?: number
   label?: string
-}> = ({ percent, color = ACCENT, size = 64, strokeWidth = 6, label }) => {
+}> = ({ percent, color, size = 64, strokeWidth = 6, label }) => {
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
   const offset = circumference - (Math.min(100, Math.max(0, percent)) / 100) * circumference
@@ -153,7 +157,7 @@ export const ProgressRing: React.FC<{
             justifyContent: 'center',
             fontSize: 13,
             fontWeight: 600,
-            color: '#ECEAE4',
+            color: TEXT,
           }}
         >
           {label}
@@ -217,11 +221,11 @@ export const DonutChart: React.FC<{
           justifyContent: 'center',
         }}
       >
-        <span style={{ fontSize: 22, fontWeight: 700, color: '#ECEAE4' }}>{centerLabel}</span>
+        <span style={{ fontSize: 22, fontWeight: 700, color: TEXT }}>{centerLabel}</span>
         {centerSublabel && <span style={{ fontSize: 11, color: MUTED }}>{centerSublabel}</span>}
       </div>
     </div>
   )
 }
 
-export { ACCENT, ACCENT_SOFT, GRID, MUTED }
+export { GRID, MUTED, TEXT }

@@ -6,11 +6,6 @@ import { getPayload } from 'payload'
 import { NavLink } from './NavLink'
 import { iconStroke } from './icons'
 
-const BG = '#111013'
-const BORDER = '#26262c'
-const MUTED = '#8A8790'
-const ACCENT = '#C8642F'
-
 const icons = {
   dashboard: iconStroke(<><rect x="3" y="3" width="8" height="8" rx="1.5" /><rect x="13" y="3" width="8" height="8" rx="1.5" /><rect x="3" y="13" width="8" height="8" rx="1.5" /><rect x="13" y="13" width="8" height="8" rx="1.5" /></>),
   pages: iconStroke(<><path d="M6 3h9l3 3v15H6z" /><path d="M15 3v3h3" /><path d="M9 12h6M9 16h6" /></>),
@@ -28,7 +23,7 @@ const icons = {
 export default async function Nav() {
   const payload = await getPayload({ config: configPromise })
 
-  const [pages, posts, services, caseStudies, testimonials, inquiriesNew, media, categories, users] =
+  const [pages, posts, services, caseStudies, testimonials, inquiriesNew, media, categories, users, siteSettings] =
     await Promise.all([
       payload.count({ collection: 'pages' }),
       payload.count({ collection: 'posts' }),
@@ -39,7 +34,12 @@ export default async function Nav() {
       payload.count({ collection: 'media' }),
       payload.count({ collection: 'categories' }),
       payload.count({ collection: 'users' }),
+      payload.findGlobal({ slug: 'site-settings' }),
     ])
+
+  // Same brand accent the public site uses (Site Settings → Brand → Accent
+  // color), so the admin never drifts out of sync with it.
+  const accent = siteSettings?.accentColor?.trim() || '#C8642F'
 
   const items = [
     { href: '/admin', label: 'Dashboard', icon: icons.dashboard, exact: true },
@@ -71,21 +71,30 @@ export default async function Nav() {
   ]
 
   return (
-    <nav
-      style={{
-        background: BG,
-        borderRight: `1px solid ${BORDER}`,
-        width: 248,
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '20px 14px',
-        boxSizing: 'border-box',
-        color: '#ECEAE4',
-        fontFamily:
-          "'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif",
-      }}
-    >
+    <>
+      {/* Overrides the static fallback in custom.scss with the real Site
+          Settings accent, so every "Save"/"Publish" button and link across
+          the whole admin — not just this Nav — matches the live site. */}
+      <style
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{
+          __html: `:root{--fastora-accent:${accent};--fastora-accent-hover:${accent};}`,
+        }}
+      />
+      <nav
+        style={{
+          background: 'var(--theme-elevation-50)',
+          borderRight: '1px solid var(--theme-border-color)',
+          width: 248,
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          padding: '20px 14px',
+          boxSizing: 'border-box',
+          color: 'var(--theme-text)',
+          fontFamily: "'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif",
+        }}
+      >
       <Link
         href="/admin"
         style={{
@@ -94,11 +103,11 @@ export default async function Nav() {
           gap: 10,
           padding: '4px 8px 20px',
           textDecoration: 'none',
-          color: '#ECEAE4',
+          color: 'var(--theme-text)',
         }}
       >
         <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <rect width="28" height="28" rx="7" fill={ACCENT} />
+          <rect width="28" height="28" rx="7" fill={accent} />
           <path d="M9 7.5h10v3.2h-6.5v3.1H18v3.1h-5.5V21H9V7.5Z" fill="#101014" />
         </svg>
         <span style={{ fontSize: 17, fontWeight: 700, letterSpacing: '-0.02em' }}>Fastora</span>
@@ -106,24 +115,25 @@ export default async function Nav() {
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 2, flex: 1 }}>
         {items.map((item) => (
-          <NavLink key={item.href} {...item} />
+          <NavLink key={item.href} accent={accent} {...item} />
         ))}
       </div>
 
-      <div style={{ borderTop: `1px solid ${BORDER}`, paddingTop: 12, marginTop: 12 }}>
+      <div style={{ borderTop: '1px solid var(--theme-border-color)', paddingTop: 12, marginTop: 12 }}>
         <a
           href="/admin/logout"
           style={{
             display: 'block',
             padding: '9px 12px',
             fontSize: 13,
-            color: MUTED,
+            color: 'var(--theme-elevation-500)',
             textDecoration: 'none',
           }}
         >
           Log out
         </a>
       </div>
-    </nav>
+      </nav>
+    </>
   )
 }

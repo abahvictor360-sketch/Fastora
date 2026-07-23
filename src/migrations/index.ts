@@ -2,6 +2,7 @@ import * as migration_20260721_155424_initial from './20260721_155424_initial';
 import * as migration_20260722_000000_brand_palette from './20260722_000000_brand_palette';
 import * as migration_20260722_010000_tags_and_roles from './20260722_010000_tags_and_roles';
 import * as migration_20260722_140000_add_demo_role from './20260722_140000_add_demo_role';
+import * as migration_20260723_000000_posts_version_tags from './20260723_000000_posts_version_tags';
 
 export const migrations = [
   {
@@ -23,5 +24,10 @@ export const migrations = [
     up: migration_20260722_140000_add_demo_role.up,
     down: migration_20260722_140000_add_demo_role.down,
     name: '20260722_140000_add_demo_role',
+  },
+  {
+    up: migration_20260723_000000_posts_version_tags.up,
+    down: migration_20260723_000000_posts_version_tags.down,
+    name: '20260723_000000_posts_version_tags',
   },
 ];

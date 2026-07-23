@@ -58,12 +58,22 @@ a:not(.btn) {
   );
 }
 
-/* Dark page canvas behind the custom Nav + Dashboard so no white shows
-   through at the edges. List/edit views keep Payload's own light content
-   cards, which now sit on a dark frame instead of a white one. */
+/* Page canvas behind the custom Nav + Dashboard, using Payload's own
+   theme variable so it correctly follows whichever mode (light/dark)
+   the user has selected in Account → Theme, instead of forcing one
+   hardcoded color that broke contrast in Payload's native list/edit
+   views. */
 html,
 body,
 .template-default,
 .template-default__wrap {
-  background: #0e0c0a;
+  background: var(--theme-bg);
+}
+
+/* Our custom Nav has no responsive collapse behavior of its own, so hide
+   Payload's built-in nav toggle — without this, clicking it could leave
+   the custom sidebar in a collapsed/hidden state with no way back in. */
+.nav-toggler,
+.app-header__mobile-nav-toggler {
+  display: none !important;
 }

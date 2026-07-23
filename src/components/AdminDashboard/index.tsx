@@ -1,17 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
 
 import { getDashboardData } from '@/utilities/getDashboardData'
-import { AreaChart, BarStat, DonutChart, ProgressRing, ACCENT, MUTED } from './charts'
-
-const BG = '#0E0C0A'
-const CARD = '#17140F'
-const BORDER = '#2A2620'
-const TEXT = '#ECEAE4'
+import { AreaChart, BarStat, DonutChart, ProgressRing, MUTED, TEXT } from './charts'
 
 const cardStyle: React.CSSProperties = {
-  background: CARD,
-  border: `1px solid ${BORDER}`,
+  background: 'var(--theme-elevation-50)',
+  border: '1px solid var(--theme-border-color)',
   borderRadius: 16,
   padding: 24,
 }
@@ -30,12 +27,21 @@ const QUICK_ACTIONS = [
   { label: 'Add New Page', href: '/admin/collections/pages/create', icon: '📄' },
   { label: 'Write an Insight', href: '/admin/collections/posts/create', icon: '✍️' },
   { label: 'Add a Service', href: '/admin/collections/services/create', icon: '⚙️' },
-  { label: 'Add Case Study', href: '/admin/collections/case-studies/create', icon: '📈' },
+  { label: 'Add New Work', href: '/admin/collections/case-studies/create', icon: '📈' },
 ]
 
 const Dashboard: React.FC = async () => {
-  const data = await getDashboardData()
+  const payload = await getPayload({ config: configPromise })
+  const [data, siteSettings] = await Promise.all([
+    getDashboardData(),
+    payload.findGlobal({ slug: 'site-settings' }),
+  ])
   const { counts } = data
+
+  // Same brand accent the public site uses (Site Settings → Brand → Accent
+  // color), so the dashboard never drifts out of sync with it.
+  const accent = siteSettings?.accentColor?.trim() || '#C8642F'
+  const accentSoft = `${accent}29`
 
   const postsPublishedPct = counts.posts ? Math.round((counts.postsPublished / counts.posts) * 100) : 0
   const servicesFeaturedPct = counts.services
@@ -48,8 +54,14 @@ const Dashboard: React.FC = async () => {
     ? Math.round((counts.inquiriesClosed / counts.inquiries) * 100)
     : 0
 
+  const inquirySegments = [
+    { label: 'New', value: counts.inquiriesNew, color: accent },
+    { label: 'Contacted', value: counts.inquiriesContacted, color: 'var(--theme-warning-500)' },
+    { label: 'Closed', value: counts.inquiriesClosed, color: 'var(--theme-elevation-300)' },
+  ]
+
   return (
-    <div style={{ background: BG, minHeight: '100%', padding: '32px', color: TEXT }}>
+    <div style={{ minHeight: '100%', padding: '32px', color: TEXT }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 24 }}>
         <div>
           <h1 style={{ fontSize: 26, fontWeight: 700, margin: 0 }}>Fastora Dashboard</h1>
@@ -79,7 +91,7 @@ const Dashboard: React.FC = async () => {
                     width: 36,
                     height: 36,
                     borderRadius: 10,
-                    background: 'rgba(200,100,47,0.16)',
+                    background: accentSoft,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -105,7 +117,7 @@ const Dashboard: React.FC = async () => {
               <span style={{ fontSize: 12, color: MUTED }}>Pages + Insights + Services + Work</span>
             </div>
             <div style={{ marginTop: 16 }}>
-              <AreaChart data={data.contentByMonth} />
+              <AreaChart data={data.contentByMonth} accent={accent} />
             </div>
           </div>
 
@@ -113,6 +125,7 @@ const Dashboard: React.FC = async () => {
             <h2 style={{ fontSize: 16, fontWeight: 600, margin: 0 }}>Content by type</h2>
             <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center' }}>
               <BarStat
+                accent={accent}
                 items={[
                   { label: 'Services', value: counts.services },
                   { label: 'Work', value: counts.caseStudies },
@@ -144,7 +157,7 @@ const Dashboard: React.FC = async () => {
                 <p style={{ fontSize: 28, fontWeight: 700, margin: '6px 0 14px' }}>{card.value}</p>
                 <Link
                   href={card.href}
-                  style={{ fontSize: 12.5, color: ACCENT, textDecoration: 'none', fontWeight: 600 }}
+                  style={{ fontSize: 12.5, color: accent, textDecoration: 'none', fontWeight: 600 }}
                 >
                   View all →
                 </Link>
@@ -158,18 +171,10 @@ const Dashboard: React.FC = async () => {
               <DonutChart
                 centerLabel={String(counts.inquiries)}
                 centerSublabel="total"
-                segments={[
-                  { label: 'New', value: counts.inquiriesNew, color: '#C8642F' },
-                  { label: 'Contacted', value: counts.inquiriesContacted, color: '#E3A05E' },
-                  { label: 'Closed', value: counts.inquiriesClosed, color: '#3A3630' },
-                ]}
+                segments={inquirySegments}
               />
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {[
-                  { label: 'New', value: counts.inquiriesNew, color: '#C8642F' },
-                  { label: 'Contacted', value: counts.inquiriesContacted, color: '#E3A05E' },
-                  { label: 'Closed', value: counts.inquiriesClosed, color: '#3A3630' },
-                ].map((row) => (
+                {inquirySegments.map((row) => (
                   <div key={row.label} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
                     <span
                       style={{
@@ -192,7 +197,7 @@ const Dashboard: React.FC = async () => {
                 display: 'block',
                 marginTop: 16,
                 fontSize: 12.5,
-                color: ACCENT,
+                color: accent,
                 textDecoration: 'none',
                 fontWeight: 600,
               }}
@@ -220,7 +225,7 @@ const Dashboard: React.FC = async () => {
                 { label: 'Inquiries resolved', pct: inquiriesResolvedPct },
               ].map((m) => (
                 <div key={m.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
-                  <ProgressRing percent={m.pct} label={`${m.pct}%`} size={72} />
+                  <ProgressRing percent={m.pct} label={`${m.pct}%`} size={72} color={accent} />
                   <span style={{ fontSize: 12, color: MUTED, textAlign: 'center' }}>{m.label}</span>
                 </div>
               ))}
@@ -242,13 +247,13 @@ const Dashboard: React.FC = async () => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '10px 0',
-                    borderBottom: `1px solid ${BORDER}`,
+                    borderBottom: '1px solid var(--theme-border-color)',
                     textDecoration: 'none',
                     color: TEXT,
                   }}
                 >
                   <span style={{ fontSize: 13.5 }}>
-                    <span style={{ color: ACCENT, fontWeight: 600 }}>{item.collectionLabel}</span>{' '}
+                    <span style={{ color: accent, fontWeight: 600 }}>{item.collectionLabel}</span>{' '}
                     {item.title}
                   </span>
                   <span style={{ fontSize: 12, color: MUTED, whiteSpace: 'nowrap' }}>
