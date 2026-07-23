@@ -30,7 +30,7 @@ export const SiteSettings: GlobalConfig = {
             {
               name: 'tagline',
               type: 'text',
-              defaultValue: 'Digital services and social media, engineered for speed.',
+              defaultValue: 'Communication that earns attention.',
             },
             {
               name: 'logoLight',
@@ -62,16 +62,16 @@ export const SiteSettings: GlobalConfig = {
                 {
                   name: 'accentColor',
                   type: 'text',
-                  defaultValue: '#C8642F',
+                  defaultValue: '#2B7FD6',
                   admin: {
                     width: '50%',
-                    description: 'Brand accent — buttons, links, highlights, CTAs.',
+                    description: 'Brand accent (Sky Blue) — buttons, links, highlights, CTAs.',
                   },
                 },
                 {
                   name: 'backgroundColor',
                   type: 'text',
-                  defaultValue: '#08080A',
+                  defaultValue: '#FFFFFF',
                   admin: { width: '50%', description: 'Page background.' },
                 },
               ],
@@ -82,13 +82,13 @@ export const SiteSettings: GlobalConfig = {
                 {
                   name: 'textColor',
                   type: 'text',
-                  defaultValue: '#ECEAE4',
+                  defaultValue: '#111827',
                   admin: { width: '50%', description: 'Body text color.' },
                 },
                 {
                   name: 'surfaceColor',
                   type: 'text',
-                  defaultValue: '#121216',
+                  defaultValue: '#F7F9FC',
                   admin: { width: '50%', description: 'Cards and raised surfaces.' },
                 },
               ],
@@ -99,13 +99,13 @@ export const SiteSettings: GlobalConfig = {
                 {
                   name: 'borderColor',
                   type: 'text',
-                  defaultValue: '#26262C',
+                  defaultValue: '#E3E8EF',
                   admin: { width: '50%', description: 'Borders and dividers.' },
                 },
                 {
                   name: 'mutedTextColor',
                   type: 'text',
-                  defaultValue: '#9D9A92',
+                  defaultValue: '#5B6472',
                   admin: { width: '50%', description: 'Secondary / muted text.' },
                 },
               ],
@@ -117,8 +117,8 @@ export const SiteSettings: GlobalConfig = {
                   // Reuses the existing `primary_color` column.
                   name: 'primaryColor',
                   type: 'text',
-                  defaultValue: '#101014',
-                  label: 'Dark panel background',
+                  defaultValue: '#0B2545',
+                  label: 'Dark panel background (Navy)',
                   admin: {
                     width: '50%',
                     description: 'Hero, footer, and feature bands.',
@@ -127,7 +127,7 @@ export const SiteSettings: GlobalConfig = {
                 {
                   name: 'darkPanelTextColor',
                   type: 'text',
-                  defaultValue: '#F4F2EC',
+                  defaultValue: '#FFFFFF',
                   admin: { width: '50%', description: 'Text on dark panels.' },
                 },
               ],
@@ -164,6 +164,7 @@ export const SiteSettings: GlobalConfig = {
                     { label: 'TikTok', value: 'tiktok' },
                     { label: 'YouTube', value: 'youtube' },
                     { label: 'Facebook', value: 'facebook' },
+                    { label: 'WhatsApp', value: 'whatsapp' },
                   ],
                 },
                 {

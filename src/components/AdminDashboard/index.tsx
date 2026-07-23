@@ -28,7 +28,7 @@ const QUICK_ACTIONS = [
   { label: 'Add New Page', href: '/admin/collections/pages/create', icon: icons.pages },
   { label: 'Write an Insight', href: '/admin/collections/posts/create', icon: icons.posts },
   { label: 'Add a Service', href: '/admin/collections/services/create', icon: icons.services },
-  { label: 'Add New Work', href: '/admin/collections/case-studies/create', icon: icons.work },
+  { label: 'Add New Case Study', href: '/admin/collections/case-studies/create', icon: icons.work },
 ]
 
 const Dashboard: React.FC = async () => {
@@ -41,7 +41,7 @@ const Dashboard: React.FC = async () => {
 
   // Same brand accent the public site uses (Site Settings → Brand → Accent
   // color), so the dashboard never drifts out of sync with it.
-  const accent = siteSettings?.accentColor?.trim() || '#C8642F'
+  const accent = siteSettings?.accentColor?.trim() || '#2B7FD6'
   const accentSoft = `${accent}29`
 
   const postsPublishedPct = counts.posts ? Math.round((counts.postsPublished / counts.posts) * 100) : 0

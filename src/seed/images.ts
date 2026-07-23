@@ -1,6 +1,6 @@
 import sharp from 'sharp'
 
-/** Generates a branded gradient placeholder JPEG (Nightshift terracotta palette) for seed media. */
+/** Generates a branded gradient placeholder JPEG (Navy / Sky Blue / Gold palette) for seed media. */
 export const generateGradientImage = async (
   colors: [string, string],
   width = 1600,

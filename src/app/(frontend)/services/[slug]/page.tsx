@@ -166,7 +166,7 @@ export default async function ServicePage({ params }: Args) {
             href="/contact"
             className="rounded-full bg-secondary px-6 py-3 text-center text-sm font-semibold text-secondary-foreground transition-opacity hover:opacity-90"
           >
-            Start a project
+            Book a Consultation
           </Link>
         </aside>
       </div>

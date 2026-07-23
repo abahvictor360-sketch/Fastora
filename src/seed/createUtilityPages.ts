@@ -2,9 +2,9 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 
 /**
- * Services, Work, and Contact are rendered by dedicated route files (not the
- * generic [slug] catch-all) because each needs real logic — a live query
- * against Services/CaseStudies, or the Resend contact form — that the
+ * Services, Case Studies, and Contact are rendered by dedicated route files
+ * (not the generic [slug] catch-all) because each needs real logic — a live
+ * query against Services/CaseStudies, or the Resend contact form — that the
  * block-based page layout can't express. But their header copy (eyebrow /
  * heading / description) was previously hardcoded in those route files,
  * which meant it didn't show up anywhere in /admin. This creates a Pages
@@ -17,35 +17,38 @@ const PAGES = [
     slug: 'services',
     title: 'Services',
     pageHeaderEyebrow: 'What we do',
-    pageHeaderHeading: 'Services engineered for speed',
+    pageHeaderHeading: 'Services built around how you communicate',
     pageHeaderDescription:
-      'Every engagement is built to move fast and prove value early. Explore what we do.',
+      'Ten integrated services, each designed to help your business communicate with more clarity, credibility, and confidence.',
     meta: {
       title: 'Services',
       description:
-        'Digital services engineered for speed — from social growth to web and AI systems.',
+        'Strategic communications, brand consulting, content strategy, and more — explore how Fastora helps businesses communicate with purpose.',
     },
   },
   {
-    slug: 'work',
-    title: 'Work',
-    pageHeaderEyebrow: 'Selected work',
+    slug: 'case-studies',
+    title: 'Case Studies',
+    pageHeaderEyebrow: 'Case studies',
     pageHeaderHeading: 'Results, not just deliverables',
-    pageHeaderDescription: 'A look at the outcomes we have engineered for the teams we partner with.',
+    pageHeaderDescription:
+      "A look at how we've helped businesses communicate with more clarity, credibility, and confidence.",
     meta: {
-      title: 'Work',
-      description: 'Selected case studies — the results we have delivered for our clients.',
+      title: 'Case Studies',
+      description:
+        'Real client work and measurable outcomes — see how Fastora helps businesses communicate more effectively.',
     },
   },
   {
     slug: 'contact',
     title: 'Contact',
     pageHeaderEyebrow: 'Contact',
-    pageHeaderHeading: "Let's start your project",
-    pageHeaderDescription: "Tell us where you want to go. We'll come back with how to get there — fast.",
+    pageHeaderHeading: "Let's start the conversation",
+    pageHeaderDescription:
+      "Tell us about your business and what you're working on. We'll follow up to schedule a consultation.",
     meta: {
       title: 'Contact',
-      description: 'Start a project with Fastora. Tell us what you want to achieve.',
+      description: 'Get in touch with Fastora to book a consultation and start communicating with more confidence.',
     },
   },
 ] as const
@@ -78,6 +81,17 @@ async function run() {
       await payload.create({ collection: 'pages', data })
       payload.logger.info(`Created ${pageData.title} page`)
     }
+  }
+
+  // The old "work" utility page doc is now superseded by "case-studies" above.
+  const staleWork = await payload.find({
+    collection: 'pages',
+    where: { slug: { equals: 'work' } },
+    limit: 1,
+  })
+  if (staleWork.docs[0]) {
+    await payload.delete({ collection: 'pages', id: staleWork.docs[0].id })
+    payload.logger.info('Removed stale "work" utility page')
   }
 }
 

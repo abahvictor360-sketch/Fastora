@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Poppins, Inter, Geist_Mono } from 'next/font/google'
 import React from 'react'
 import { draftMode } from 'next/headers'
 
@@ -15,8 +15,15 @@ import { buildBrandStyle } from '@/utilities/brandTokens'
 
 import './globals.css'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const poppins = Poppins({
+  variable: '--font-poppins',
+  subsets: ['latin'],
+  weight: ['500', '600', '700', '800'],
+  display: 'swap',
+})
+
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
   display: 'swap',
 })
@@ -49,7 +56,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html
-      className={cn(geistSans.variable, geistMono.variable, 'h-full')}
+      className={cn(poppins.variable, inter.variable, geistMono.variable, 'h-full')}
       lang="en"
       suppressHydrationWarning
     >
@@ -83,11 +90,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 export const metadata: Metadata = {
   metadataBase: new URL(getServerSideURL()),
   title: {
-    default: 'Fastora — Digital Services & Social Media Agency',
+    default: 'Fastora — Communications & Digital Strategy',
     template: '%s | Fastora',
   },
   description:
-    'Fastora is a digital services and social media agency built for speed and smart execution.',
+    'Fastora is a communications and digital strategy company that helps businesses communicate with purpose, strengthen their brands, and earn the attention they deserve.',
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',

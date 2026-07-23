@@ -30,7 +30,7 @@ export const WhyFastoraBlock: React.FC<WhyFastoraBlockProps> = ({ eyebrow, headi
       >
         {points.map((point, i) => {
           const parsed = point.stat ? parseStat(point.stat) : null
-          // First card gets the terracotta accent treatment (like the reference).
+          // First card gets the gradient accent treatment (like the reference).
           const accent = i === 0
           return (
             <div

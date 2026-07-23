@@ -9,6 +9,7 @@ import { Content } from '../../blocks/Content/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { ServicesOverview } from '../../blocks/ServicesOverview/config'
 import { WhyFastora } from '../../blocks/WhyFastora/config'
+import { OurProcess } from '../../blocks/OurProcess/config'
 import { SelectedWork } from '../../blocks/SelectedWork/config'
 import { TestimonialsBlock } from '../../blocks/TestimonialsBlock/config'
 import { FAQ } from '../../blocks/FAQ/config'
@@ -91,7 +92,7 @@ export const Pages: CollectionConfig = {
               label: 'Eyebrow',
               admin: {
                 description:
-                  'Used by utility pages (Services, Work, Contact) that render their own listing/form below a simple header instead of the block-based Content layout.',
+                  'Used by utility pages (Services, Case Studies, Contact) that render their own listing/form below a simple header instead of the block-based Content layout.',
               },
             },
             {
@@ -119,6 +120,7 @@ export const Pages: CollectionConfig = {
                 Archive,
                 ServicesOverview,
                 WhyFastora,
+                OurProcess,
                 SelectedWork,
                 TestimonialsBlock,
                 FAQ,
@@ -127,7 +129,7 @@ export const Pages: CollectionConfig = {
               admin: {
                 initCollapsed: true,
                 description:
-                  'Optional for utility pages that use the Page Header tab instead (Services, Work, Contact).',
+                  'Optional for utility pages that use the Page Header tab instead (Services, Case Studies, Contact).',
               },
             },
           ],

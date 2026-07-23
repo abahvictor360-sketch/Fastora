@@ -4,6 +4,8 @@ import * as migration_20260722_010000_tags_and_roles from './20260722_010000_tag
 import * as migration_20260722_140000_add_demo_role from './20260722_140000_add_demo_role';
 import * as migration_20260723_000000_posts_version_tags from './20260723_000000_posts_version_tags';
 import * as migration_20260723_010000_pages_page_header from './20260723_010000_pages_page_header';
+import * as migration_20260723_020000_add_whatsapp_social from './20260723_020000_add_whatsapp_social';
+import * as migration_20260723_030000_our_process_block from './20260723_030000_our_process_block';
 
 export const migrations = [
   {
@@ -35,5 +37,15 @@ export const migrations = [
     up: migration_20260723_010000_pages_page_header.up,
     down: migration_20260723_010000_pages_page_header.down,
     name: '20260723_010000_pages_page_header',
+  },
+  {
+    up: migration_20260723_020000_add_whatsapp_social.up,
+    down: migration_20260723_020000_add_whatsapp_social.down,
+    name: '20260723_020000_add_whatsapp_social',
+  },
+  {
+    up: migration_20260723_030000_our_process_block.up,
+    down: migration_20260723_030000_our_process_block.down,
+    name: '20260723_030000_our_process_block',
   },
 ];

@@ -18,7 +18,7 @@ export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
   labels: {
     singular: 'Case Study',
-    plural: 'Work',
+    plural: 'Case Studies',
   },
   access: {
     create: authenticatedNotDemo,
@@ -41,7 +41,7 @@ export const CaseStudies: CollectionConfig = {
       beforeListTable: [
         {
           path: '@/components/AdminListCreateBanner',
-          clientProps: { collectionSlug: 'case-studies', label: 'Work' },
+          clientProps: { collectionSlug: 'case-studies', label: 'Case Study' },
         },
       ],
     },

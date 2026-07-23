@@ -10,24 +10,24 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { queryUtilityPage } from '@/utilities/queryUtilityPage'
 
 const FALLBACK = {
-  eyebrow: 'Selected work',
+  eyebrow: 'Case studies',
   heading: 'Results, not just deliverables',
-  description: 'A look at the outcomes we have engineered for the teams we partner with.',
+  description: 'A look at how we help businesses communicate with more clarity, credibility, and confidence.',
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await queryUtilityPage('work')
+  const page = await queryUtilityPage('case-studies')
   return generateMeta({
     doc: page || {
-      meta: { title: 'Work', description: FALLBACK.description },
+      meta: { title: 'Case Studies', description: FALLBACK.description },
     },
   })
 }
 
-export default async function WorkPage() {
+export default async function CaseStudiesPage() {
   const payload = await getPayload({ config: configPromise })
   const [page, { docs: caseStudies }] = await Promise.all([
-    queryUtilityPage('work'),
+    queryUtilityPage('case-studies'),
     payload.find({
       collection: 'case-studies',
       depth: 1,
@@ -52,7 +52,7 @@ export default async function WorkPage() {
             {caseStudies.map((study) => (
               <Link
                 key={study.id}
-                href={`/work/${study.slug}`}
+                href={`/case-studies/${study.slug}`}
                 data-reveal="up"
                 className="group overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-secondary/60"
               >

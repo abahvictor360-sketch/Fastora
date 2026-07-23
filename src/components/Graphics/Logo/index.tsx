@@ -3,7 +3,7 @@ import React from 'react'
 /**
  * Admin logo — replaces the Payload logo on the login screen and nav header.
  * The wordmark uses `currentColor` so it stays legible in both the light and
- * dark admin themes; the mark keeps the Fastora terracotta accent.
+ * dark admin themes; the mark keeps the Fastora Sky Blue accent.
  */
 const Logo: React.FC = () => {
   return (
@@ -24,8 +24,8 @@ const Logo: React.FC = () => {
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        <rect width="28" height="28" rx="7" fill="#C8642F" />
-        <path d="M9 7.5h10v3.2h-6.5v3.1H18v3.1h-5.5V21H9V7.5Z" fill="#101014" />
+        <rect width="28" height="28" rx="7" fill="#2B7FD6" />
+        <path d="M9 7.5h10v3.2h-6.5v3.1H18v3.1h-5.5V21H9V7.5Z" fill="#0B2545" />
       </svg>
       <span
         style={{

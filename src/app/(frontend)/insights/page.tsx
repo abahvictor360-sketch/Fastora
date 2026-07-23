@@ -10,7 +10,7 @@ import { formatDateTime } from '@/utilities/formatDateTime'
 
 export const metadata: Metadata = {
   title: 'Insights',
-  description: 'Ideas, playbooks, and lessons on building content engines that grow.',
+  description: 'Practical thinking on communications, branding, and digital strategy from the Fastora team.',
 }
 
 export default async function InsightsPage() {
@@ -27,8 +27,8 @@ export default async function InsightsPage() {
     <div>
       <PageHeader
         eyebrow="Insights"
-        title="Playbooks for growing faster"
-        description="Ideas and lessons from building content engines that actually move the numbers."
+        title="Thinking on communication and brand strategy"
+        description="Practical ideas on communications, branding, and digital strategy — for businesses that want to be understood, not just seen."
       />
 
       <section className="container pb-24 pt-16">

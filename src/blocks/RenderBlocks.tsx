@@ -8,6 +8,7 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ServicesOverviewBlock } from '@/blocks/ServicesOverview/Component'
 import { WhyFastoraBlock } from '@/blocks/WhyFastora/Component'
+import { OurProcessBlock } from '@/blocks/OurProcess/Component'
 import { SelectedWorkBlock } from '@/blocks/SelectedWork/Component'
 import { TestimonialsBlockComponent } from '@/blocks/TestimonialsBlock/Component'
 import { FAQBlockComponent } from '@/blocks/FAQ/Component'
@@ -20,6 +21,7 @@ const blockComponents = {
   mediaBlock: MediaBlock,
   servicesOverview: ServicesOverviewBlock,
   whyFastora: WhyFastoraBlock,
+  ourProcess: OurProcessBlock,
   selectedWork: SelectedWorkBlock,
   testimonialsBlock: TestimonialsBlockComponent,
   faq: FAQBlockComponent,

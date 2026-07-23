@@ -25,14 +25,14 @@ export default async function Nav() {
 
   // Same brand accent the public site uses (Site Settings → Brand → Accent
   // color), so the admin never drifts out of sync with it.
-  const accent = siteSettings?.accentColor?.trim() || '#C8642F'
+  const accent = siteSettings?.accentColor?.trim() || '#2B7FD6'
 
   const items = [
     { href: '/admin', label: 'Dashboard', icon: icons.dashboard, exact: true },
     { href: '/admin/collections/pages', label: 'Pages', icon: icons.pages, badge: pages.totalDocs },
     { href: '/admin/collections/posts', label: 'Insights', icon: icons.posts, badge: posts.totalDocs },
     { href: '/admin/collections/services', label: 'Services', icon: icons.services, badge: services.totalDocs },
-    { href: '/admin/collections/case-studies', label: 'Work', icon: icons.work, badge: caseStudies.totalDocs },
+    { href: '/admin/collections/case-studies', label: 'Case Studies', icon: icons.work, badge: caseStudies.totalDocs },
     {
       href: '/admin/collections/testimonials',
       label: 'Testimonials',

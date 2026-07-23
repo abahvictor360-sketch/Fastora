@@ -15,9 +15,12 @@ async function run() {
   const data = {
     title: 'About',
     heroType: 'lowImpact' as const,
-    heroRichText: richTextHeadingAndParagraphs('Built for brands who move fast', [
-      "Fastora started with a simple frustration: most agencies are slow, and slow costs businesses momentum they can't get back. We built Fastora to be the opposite — sharp strategy and fast execution, from one accountable team.",
-    ]),
+    heroRichText: richTextHeadingAndParagraphs(
+      'We help good businesses become impossible to overlook',
+      [
+        'Fastora is a communications and digital strategy company. We help businesses communicate with purpose, strengthen their brands, and earn the attention they deserve.',
+      ],
+    ),
     layout: [
       {
         blockType: 'content' as const,
@@ -25,34 +28,10 @@ async function run() {
           {
             size: 'full' as const,
             richText: richTextHeadingAndParagraphs('Our story', [
-              'Fastora was founded to fix a pattern we kept seeing: brands hiring multiple vendors — one for social, one for the website, one for ads — and losing weeks to handoffs between them. We brought it under one roof instead.',
-              'Today we run social media management, content, web design and development, AI-powered content systems, digital campaigns, and brand identity as one connected team, on fixed short-cycle sprints, so nothing sits waiting on someone else.',
+              'Fastora was founded on a simple observation: many businesses are genuinely good at what they do, with capable teams and valuable services, yet they are overlooked because they struggle to communicate their value.',
+              "Inconsistent messaging. Websites that don't reflect the quality of the work behind them. Content with no clear direction. Brands that never quite explain why people should choose them.",
+              'Fastora exists to close that gap — helping businesses communicate more effectively so they become easier to understand, easier to trust, and harder to ignore.',
             ]),
-          },
-        ],
-      },
-      {
-        blockType: 'whyFastora' as const,
-        eyebrow: 'Our values',
-        heading: 'What we optimize for',
-        points: [
-          {
-            stat: 'Speed',
-            title: 'Move before the window closes',
-            description:
-              'Opportunities in social and digital move fast. We scope tight, ship in days, and iterate in public rather than polishing in private for weeks.',
-          },
-          {
-            stat: 'Clarity',
-            title: 'No black boxes',
-            description:
-              'You always know what is being worked on, by whom, and when it ships. Every engagement runs on a visible, shared plan.',
-          },
-          {
-            stat: 'Execution',
-            title: 'Strategy is worth nothing unpublished',
-            description:
-              'We would rather ship a good idea this week than a perfect one next quarter. Execution is the actual product.',
           },
         ],
       },
@@ -61,21 +40,124 @@ async function run() {
         columns: [
           {
             size: 'full' as const,
-            richText: richTextHeadingAndParagraphs('The team', [
-              'Fastora is run by a small, senior, in-house team spanning strategy, content, design, and engineering — not a rotating cast of subcontractors. Team profiles are coming soon.',
+            richText: richTextHeadingAndParagraphs('The problem we exist to solve', [
+              "Every day, good businesses miss opportunities — not because they lack quality or work ethic, but because people don't fully understand who they are, what they do, or why they matter.",
+              'Businesses are judged long before a conversation begins. A website, a social profile, a single post can decide whether someone engages or moves on — and too often, communication creates confusion instead of confidence.',
+              'We believe communication is one of the most valuable assets a business can invest in. When businesses communicate well, people understand their value faster, trust grows more easily, and better opportunities follow.',
             ]),
           },
         ],
       },
       {
+        blockType: 'content' as const,
+        columns: [
+          {
+            size: 'half' as const,
+            richText: richTextHeadingAndParagraphs('Our vision', [
+              "To become one of the world's most respected communications and digital strategy companies — helping businesses, founders, and organisations communicate with confidence and build brands with lasting impact.",
+              "We're proudly African, committed to raising the standard of business communication across Africa while serving clients and partners around the world.",
+            ]),
+          },
+          {
+            size: 'half' as const,
+            richText: richTextHeadingAndParagraphs('Our mission', [
+              'To help businesses communicate with purpose, strengthen their brands, and build meaningful connections through thoughtful strategy, compelling storytelling, and practical digital solutions.',
+              'We listen before advising, think before creating, and execute with the same care from the first conversation to long after a project ships.',
+            ]),
+          },
+        ],
+      },
+      {
+        blockType: 'whyFastora' as const,
+        eyebrow: 'Our values',
+        heading: 'What guides our work',
+        points: [
+          {
+            stat: 'Think first',
+            title: 'Think Before We Create',
+            description:
+              "Every project begins with understanding — the client's business, goals, audience, and challenges — before we recommend anything.",
+          },
+          {
+            stat: 'On purpose',
+            title: 'Communicate with Purpose',
+            description:
+              'Every message has a clear objective, whether to inform, persuade, reassure, or inspire action.',
+          },
+          {
+            stat: 'Consistency',
+            title: 'Build Trust Through Consistency',
+            description:
+              'Consistency creates recognition. Recognition builds confidence. Confidence strengthens trust.',
+          },
+          {
+            stat: 'Simplicity',
+            title: 'Keep Things Simple',
+            description:
+              "Complex ideas don't need complicated explanations — our goal is always clarity over complexity.",
+          },
+          {
+            stat: 'Excellence',
+            title: 'Deliver with Excellence',
+            description:
+              'From strategy and writing to design and execution, we hold every detail to a high standard.',
+          },
+          {
+            stat: 'Partnership',
+            title: 'Grow Through Partnership',
+            description:
+              "We invest in our clients' ambitions and remain committed to their long-term growth. When they succeed, we succeed.",
+          },
+        ],
+      },
+      {
+        blockType: 'content' as const,
+        columns: [
+          {
+            size: 'full' as const,
+            richText: richTextHeadingAndParagraphs('Our approach', [
+              "Many agencies focus on producing more content. We focus on helping clients communicate more effectively. We don't start with templates or trends — we start by understanding the business and the communication challenge in front of it.",
+              'Every project we take on is guided by the same promise: to help good businesses become easier to understand, easier to trust, and harder to ignore. Communication should never create confusion — it should build confidence.',
+            ]),
+          },
+        ],
+      },
+      {
+        blockType: 'faq' as const,
+        eyebrow: 'FAQ',
+        heading: 'Questions about working with us',
+        items: [
+          {
+            question: 'What makes Fastora different from a traditional marketing agency?',
+            answer:
+              'We position ourselves as a communications and digital strategy partner, not a content factory. We start with strategy and positioning, then move into execution — so the work we produce is always tied to a clear business objective.',
+          },
+          {
+            question: 'Which industries does Fastora work with?',
+            answer:
+              'We work with SMEs, startups, corporate organisations, professional service firms, founders and executives, non-profits, educational institutions, and government or development organisations — any business serious about communicating better.',
+          },
+          {
+            question: 'Do you only work with businesses in Africa?',
+            answer:
+              "No. We're proudly African and based in Africa, but we work with clients and partners globally.",
+          },
+          {
+            question: 'How do we get started?',
+            answer:
+              "Book a consultation through our contact page. We'll ask a few questions about your business and communication goals, then follow up with a proposal tailored to what you actually need.",
+          },
+        ],
+      },
+      {
         blockType: 'cta' as const,
-        richText: richTextFromParagraphs(['Ready to move faster?']),
+        richText: richTextFromParagraphs(['Ready to communicate with more confidence?']),
         links: [
           {
             link: {
               type: 'custom' as const,
               url: '/contact',
-              label: 'Start a project',
+              label: 'Book a Consultation',
               appearance: 'default' as const,
             },
           },
@@ -85,7 +167,7 @@ async function run() {
     meta: {
       title: 'About Fastora',
       description:
-        'Fastora is a digital services and social media agency built for speed, clarity, and execution — one in-house team, no subcontracted black boxes.',
+        'Fastora is a communications and digital strategy company helping businesses communicate with purpose, strengthen their brand, and earn the attention they deserve.',
     },
     _status: 'published' as const,
     slug: 'about',

@@ -2,34 +2,41 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  /* Fastora — "Nightshift" agency design tokens (dark, terracotta accent) */
-  --background: #08080a;
-  --foreground: #eceae4;
+  /* Fastora — communications & digital strategy company. Light, premium,
+     consulting-firm palette: Navy + Sky Blue primary, White/Black
+     supporting, Gold reserved for subtle premium accents. */
+  --background: #ffffff;
+  --foreground: #111827;
 
-  /* Dark elevated sections (hero fallback, footer, stat band) */
-  --color-primary: #101014;
-  --color-primary-foreground: #f4f2ec;
+  /* Navy — hero, footer, and feature bands */
+  --color-primary: #0b2545;
+  --color-primary-foreground: #ffffff;
 
-  /* Terracotta accent, used for eyebrows, links, highlights, CTAs */
-  --color-secondary: #c8642f;
+  /* Sky Blue — the interactive accent: links, buttons, highlights, CTAs */
+  --color-secondary: #2b7fd6;
   --color-secondary-foreground: #ffffff;
 
-  --color-accent: #d9773d;
-  --color-accent-foreground: #17110c;
+  --color-accent: #4c97de;
+  --color-accent-foreground: #0b2545;
 
-  --color-card: #121216;
-  --color-card-foreground: #eceae4;
+  --color-card: #f7f9fc;
+  --color-card-foreground: #111827;
 
-  --color-muted: #1a1a1f;
-  --color-muted-foreground: #9d9a92;
+  --color-muted: #f1f4f8;
+  --color-muted-foreground: #5b6472;
 
-  --color-border: #26262c;
-  --color-ring: #c8642f;
+  --color-border: #e3e8ef;
+  --color-ring: #2b7fd6;
 
-  --color-destructive: #e5484d;
+  --color-destructive: #d13b3b;
   --color-destructive-foreground: #ffffff;
 
-  --gradient-velocity: linear-gradient(90deg, #e07a3f 0%, #c8642f 100%);
+  /* Gold — a subtle accent reserved for emphasis and premium touches, not
+     for primary interactive elements. */
+  --color-gold: #c6a15b;
+  --color-gold-foreground: #0b2545;
+
+  --gradient-velocity: linear-gradient(100deg, #4c97de 0%, #2b7fd6 100%);
 }
 
 @theme inline {
@@ -50,9 +57,11 @@
   --color-ring: var(--color-ring);
   --color-destructive: var(--color-destructive);
   --color-destructive-foreground: var(--color-destructive-foreground);
+  --color-gold: var(--color-gold);
+  --color-gold-foreground: var(--color-gold-foreground);
 
-  --font-display: var(--font-geist-sans);
-  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-poppins);
+  --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 
   --container-page: 1280px;

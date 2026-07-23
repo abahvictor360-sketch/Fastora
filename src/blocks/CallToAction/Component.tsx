@@ -17,7 +17,7 @@ export const CallToActionBlock: React.FC<CTABlockProps> = ({ links, richText }) 
           className="animate-float pointer-events-none absolute -bottom-24 -right-16 h-80 w-80 rounded-full opacity-60 blur-3xl"
           style={{
             background:
-              'radial-gradient(circle at center, rgba(200,100,47,0.4), transparent 62%)',
+              'radial-gradient(circle at center, rgba(43,127,214,0.35), transparent 62%)',
           }}
         />
         <div className="relative z-10 flex flex-col gap-10 md:flex-row md:items-center md:justify-between">

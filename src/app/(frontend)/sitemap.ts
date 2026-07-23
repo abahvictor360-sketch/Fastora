@@ -42,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${url}/`, changeFrequency: 'weekly', priority: 1 },
     { url: `${url}/services`, changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${url}/work`, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${url}/case-studies`, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${url}/insights`, changeFrequency: 'daily', priority: 0.8 },
     { url: `${url}/about`, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${url}/contact`, changeFrequency: 'monthly', priority: 0.7 },
@@ -72,7 +72,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }))
 
   const caseStudyRoutes: MetadataRoute.Sitemap = caseStudies.docs.map((study) => ({
-    url: `${url}/work/${study.slug}`,
+    url: `${url}/case-studies/${study.slug}`,
     lastModified: study.updatedAt,
     changeFrequency: 'monthly',
     priority: 0.7,

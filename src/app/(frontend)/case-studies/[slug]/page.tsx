@@ -101,10 +101,10 @@ export default async function CaseStudyPage({ params }: Args) {
 
       <section className="container pb-24 text-center">
         <Link
-          href="/work"
+          href="/case-studies"
           className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
         >
-          ← Back to all work
+          ← Back to all case studies
         </Link>
       </section>
     </article>

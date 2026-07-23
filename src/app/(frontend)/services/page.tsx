@@ -7,13 +7,33 @@ import React from 'react'
 
 import { Media } from '@/components/Media'
 import { PageHeader } from '@/components/PageHeader'
+import { FAQBlockComponent } from '@/blocks/FAQ/Component'
 import { generateMeta } from '@/utilities/generateMeta'
 import { queryUtilityPage } from '@/utilities/queryUtilityPage'
 
+const SERVICES_FAQS = [
+  {
+    question: 'How do I know which service is right for us?',
+    answer:
+      "Book a consultation and we'll help you figure out the right starting point — most engagements begin with Strategic Communications or Brand Consulting before moving into execution.",
+  },
+  {
+    question: 'Can we combine multiple services?',
+    answer:
+      'Yes. Most clients combine two or three services — strategy, content, and digital marketing are a common pairing — delivered as one connected engagement.',
+  },
+  {
+    question: 'Do you offer one-off projects or only retainers?',
+    answer:
+      'Both. Some services, like Brand Consulting, work well as defined projects. Others, like Social Media Management and Communication Advisory, are typically ongoing retainers.',
+  },
+]
+
 const FALLBACK = {
   eyebrow: 'What we do',
-  heading: 'Services engineered for speed',
-  description: 'Every engagement is built to move fast and prove value early. Explore what we do.',
+  heading: 'Services built around how you communicate',
+  description:
+    'Ten integrated services, each designed to help your business communicate with more clarity, credibility, and confidence.',
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -83,6 +103,13 @@ export default async function ServicesPage() {
           <p className="text-muted-foreground">No services published yet.</p>
         )}
       </section>
+
+      <FAQBlockComponent
+        blockType="faq"
+        eyebrow="FAQ"
+        heading="Questions about our services"
+        items={SERVICES_FAQS}
+      />
     </div>
   )
 }

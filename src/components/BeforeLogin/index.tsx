@@ -11,7 +11,7 @@ const BeforeLogin: React.FC = async () => {
   // Same brand accent the public site and the rest of the admin use, so the
   // login screen — the one page a visitor sees before ever authenticating —
   // never shows a stale hardcoded color if the accent changes in Site Settings.
-  const accent = siteSettings?.accentColor?.trim() || '#C8642F'
+  const accent = siteSettings?.accentColor?.trim() || '#2B7FD6'
 
   return (
     <>

@@ -6,8 +6,8 @@ import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 
 /**
- * High-impact hero — dark, editorial, no imagery.
- * A soft terracotta glow sits behind the headline and an oversized
+ * High-impact hero — dark navy, editorial, no imagery.
+ * A soft gold glow sits behind the headline and an oversized
  * "FASTORA" wordmark anchors the section, mirroring the reference layout.
  */
 export const HighImpactHero: React.FC<HeroData> = ({ links, richText }) => {
@@ -18,7 +18,7 @@ export const HighImpactHero: React.FC<HeroData> = ({ links, richText }) => {
         className="animate-float pointer-events-none absolute -top-24 right-[-10%] h-[38rem] w-[38rem] rounded-full opacity-70 blur-3xl"
         style={{
           background:
-            'radial-gradient(circle at center, rgba(200,100,47,0.32), transparent 62%)',
+            'radial-gradient(circle at center, rgba(198,161,91,0.28), transparent 62%)',
         }}
       />
       <div
@@ -35,21 +35,19 @@ export const HighImpactHero: React.FC<HeroData> = ({ links, richText }) => {
         data-reveal-group="120"
       >
         <div className="flex flex-col gap-6">
-          {/* rating row */}
+          {/* eyebrow */}
           <div
             data-reveal="up"
-            className="flex items-center gap-3 text-sm text-primary-foreground/70"
+            className="flex items-center gap-2 text-sm font-medium uppercase tracking-wide text-secondary"
           >
-            <span className="flex gap-0.5 text-secondary" aria-hidden="true">
-              {'★★★★★'}
-            </span>
-            <span>Trusted by teams shipping at speed</span>
+            <span className="h-1.5 w-1.5 rounded-full bg-secondary" aria-hidden="true" />
+            <span>Communications & Digital Strategy</span>
           </div>
 
           {richText && (
             <div data-reveal="up">
               <RichText
-                className="max-w-4xl [&_h1]:text-5xl [&_h1]:font-semibold [&_h1]:leading-[1.02] [&_h1]:text-violet-400 md:[&_h1]:text-7xl [&_p]:mt-6 [&_p]:max-w-xl [&_p]:text-lg [&_p]:text-primary-foreground/70"
+                className="max-w-4xl [&_h1]:text-5xl [&_h1]:font-semibold [&_h1]:leading-[1.02] [&_h1]:text-primary-foreground md:[&_h1]:text-7xl [&_p]:mt-6 [&_p]:max-w-xl [&_p]:text-lg [&_p]:text-primary-foreground/70"
                 data={richText}
                 enableGutter={false}
               />

@@ -40,11 +40,11 @@ export const SelectedWorkBlock: React.FC<SelectedWorkBlockProps> = async ({
           )}
         </div>
         <Link
-          href="/work"
+          href="/case-studies"
           data-reveal="up"
           className="group inline-flex items-center gap-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
         >
-          View all work
+          View all case studies
           <span className="transition-transform group-hover:translate-x-1">→</span>
         </Link>
       </div>
@@ -53,7 +53,7 @@ export const SelectedWorkBlock: React.FC<SelectedWorkBlockProps> = async ({
         {caseStudies.map((study) => (
           <Link
             key={study.id}
-            href={`/work/${study.slug}`}
+            href={`/case-studies/${study.slug}`}
             data-reveal="up"
             className="group overflow-hidden rounded-3xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-secondary/60"
           >

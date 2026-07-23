@@ -182,7 +182,7 @@ export async function getDashboardData(): Promise<DashboardData> {
     ...latestCaseStudies.docs.map((d) => ({
       id: d.id,
       title: d.title,
-      collectionLabel: 'Work',
+      collectionLabel: 'Case Studies',
       href: `/admin/collections/case-studies/${d.id}`,
       updatedAt: d.updatedAt as string,
     })),

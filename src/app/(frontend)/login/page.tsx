@@ -18,7 +18,7 @@ export default function LoginPage() {
         className="animate-float pointer-events-none absolute -top-32 left-1/2 h-[36rem] w-[36rem] -translate-x-1/2 rounded-full opacity-60 blur-3xl"
         style={{
           background:
-            'radial-gradient(circle at center, rgba(200,100,47,0.28), transparent 62%)',
+            'radial-gradient(circle at center, rgba(198,161,91,0.28), transparent 62%)',
         }}
       />
       <div

@@ -244,13 +244,13 @@ export interface Page {
    */
   heroMedia?: (number | null) | Media;
   /**
-   * Used by utility pages (Services, Work, Contact) that render their own listing/form below a simple header instead of the block-based Content layout.
+   * Used by utility pages (Services, Case Studies, Contact) that render their own listing/form below a simple header instead of the block-based Content layout.
    */
   pageHeaderEyebrow?: string | null;
   pageHeaderHeading?: string | null;
   pageHeaderDescription?: string | null;
   /**
-   * Optional for utility pages that use the Page Header tab instead (Services, Work, Contact).
+   * Optional for utility pages that use the Page Header tab instead (Services, Case Studies, Contact).
    */
   layout?:
     | (
@@ -260,6 +260,7 @@ export interface Page {
         | ArchiveBlock
         | ServicesOverviewBlock
         | WhyFastoraBlock
+        | OurProcessBlock
         | SelectedWorkBlock
         | TestimonialsBlockType
         | FAQBlock
@@ -658,6 +659,25 @@ export interface WhyFastoraBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'whyFastora';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OurProcessBlock".
+ */
+export interface OurProcessBlock {
+  eyebrow?: string | null;
+  heading: string;
+  description?: string | null;
+  steps?:
+    | {
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ourProcess';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1181,6 +1201,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         servicesOverview?: T | ServicesOverviewBlockSelect<T>;
         whyFastora?: T | WhyFastoraBlockSelect<T>;
+        ourProcess?: T | OurProcessBlockSelect<T>;
         selectedWork?: T | SelectedWorkBlockSelect<T>;
         testimonialsBlock?: T | TestimonialsBlockTypeSelect<T>;
         faq?: T | FAQBlockSelect<T>;
@@ -1295,6 +1316,24 @@ export interface WhyFastoraBlockSelect<T extends boolean = true> {
     | T
     | {
         stat?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OurProcessBlock_select".
+ */
+export interface OurProcessBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  steps?:
+    | T
+    | {
         title?: T;
         description?: T;
         id?: T;
@@ -1786,7 +1825,7 @@ export interface SiteSetting {
   logoDark?: (number | null) | Media;
   favicon?: (number | null) | Media;
   /**
-   * Brand accent — buttons, links, highlights, CTAs.
+   * Brand accent (Sky Blue) — buttons, links, highlights, CTAs.
    */
   accentColor?: string | null;
   /**
@@ -1822,7 +1861,7 @@ export interface SiteSetting {
   address?: string | null;
   socialLinks?:
     | {
-        platform: 'instagram' | 'twitter' | 'linkedin' | 'tiktok' | 'youtube' | 'facebook';
+        platform: 'instagram' | 'twitter' | 'linkedin' | 'tiktok' | 'youtube' | 'facebook' | 'whatsapp';
         url: string;
         id?: string | null;
       }[]

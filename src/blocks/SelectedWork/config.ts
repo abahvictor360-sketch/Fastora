@@ -4,14 +4,14 @@ export const SelectedWork: Block = {
   slug: 'selectedWork',
   interfaceName: 'SelectedWorkBlock',
   labels: {
-    singular: 'Selected Work',
-    plural: 'Selected Work Blocks',
+    singular: 'Selected Case Studies',
+    plural: 'Selected Case Studies Blocks',
   },
   fields: [
     {
       name: 'eyebrow',
       type: 'text',
-      defaultValue: 'Selected work',
+      defaultValue: 'Case studies',
     },
     {
       name: 'heading',

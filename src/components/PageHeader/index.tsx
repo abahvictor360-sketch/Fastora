@@ -14,7 +14,7 @@ export const PageHeader: React.FC<{
       <div
         className="animate-float pointer-events-none absolute -top-32 right-[-10%] h-[32rem] w-[32rem] rounded-full opacity-60 blur-3xl"
         style={{
-          background: 'radial-gradient(circle at center, rgba(200,100,47,0.25), transparent 62%)',
+          background: 'radial-gradient(circle at center, rgba(198,161,91,0.25), transparent 62%)',
         }}
       />
       <div className="container relative z-10 pt-28 pb-16 md:pt-36 md:pb-20" data-reveal-group="110">
