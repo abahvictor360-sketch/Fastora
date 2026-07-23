@@ -4,6 +4,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 
 import { getDashboardData } from '@/utilities/getDashboardData'
+import { icons } from '@/components/AdminNav/icons'
 import { AreaChart, BarStat, DonutChart, ProgressRing, MUTED, TEXT } from './charts'
 
 const cardStyle: React.CSSProperties = {
@@ -24,10 +25,10 @@ function timeAgo(iso: string) {
 }
 
 const QUICK_ACTIONS = [
-  { label: 'Add New Page', href: '/admin/collections/pages/create', icon: '📄' },
-  { label: 'Write an Insight', href: '/admin/collections/posts/create', icon: '✍️' },
-  { label: 'Add a Service', href: '/admin/collections/services/create', icon: '⚙️' },
-  { label: 'Add New Work', href: '/admin/collections/case-studies/create', icon: '📈' },
+  { label: 'Add New Page', href: '/admin/collections/pages/create', icon: icons.pages },
+  { label: 'Write an Insight', href: '/admin/collections/posts/create', icon: icons.posts },
+  { label: 'Add a Service', href: '/admin/collections/services/create', icon: icons.services },
+  { label: 'Add New Work', href: '/admin/collections/case-studies/create', icon: icons.work },
 ]
 
 const Dashboard: React.FC = async () => {
@@ -92,17 +93,18 @@ const Dashboard: React.FC = async () => {
                     height: 36,
                     borderRadius: 10,
                     background: accentSoft,
+                    color: accent,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    fontSize: 16,
+                    flexShrink: 0,
                   }}
                 >
                   {action.icon}
                 </span>
                 <span style={{ fontWeight: 600, fontSize: 14 }}>{action.label}</span>
               </div>
-              <p style={{ color: MUTED, fontSize: 12.5, marginTop: 10, marginBottom: 0 }}>
+              <p style={{ color: MUTED, fontSize: 13, marginTop: 10, marginBottom: 0 }}>
                 Jump straight into a blank draft.
               </p>
             </Link>
@@ -157,7 +159,7 @@ const Dashboard: React.FC = async () => {
                 <p style={{ fontSize: 28, fontWeight: 700, margin: '6px 0 14px' }}>{card.value}</p>
                 <Link
                   href={card.href}
-                  style={{ fontSize: 12.5, color: accent, textDecoration: 'none', fontWeight: 600 }}
+                  style={{ fontSize: 13, color: accent, textDecoration: 'none', fontWeight: 600 }}
                 >
                   View all →
                 </Link>
@@ -167,36 +169,46 @@ const Dashboard: React.FC = async () => {
 
           <div style={cardStyle}>
             <h2 style={{ fontSize: 16, fontWeight: 600, margin: 0 }}>Inquiries</h2>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginTop: 16 }}>
-              <DonutChart
-                centerLabel={String(counts.inquiries)}
-                centerSublabel="total"
-                segments={inquirySegments}
-              />
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {inquirySegments.map((row) => (
-                  <div key={row.label} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
-                    <span
-                      style={{
-                        width: 8,
-                        height: 8,
-                        borderRadius: 999,
-                        background: row.color,
-                        display: 'inline-block',
-                      }}
-                    />
-                    <span style={{ color: MUTED }}>{row.label}</span>
-                    <span style={{ marginLeft: 'auto', fontWeight: 600 }}>{row.value}</span>
-                  </div>
-                ))}
+            {counts.inquiries === 0 ? (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, padding: '28px 0 8px', textAlign: 'center' }}>
+                <span style={{ color: 'var(--theme-elevation-400)' }}>{icons.inquiries}</span>
+                <p style={{ fontSize: 13, color: MUTED, margin: 0 }}>No inquiries yet.</p>
+                <p style={{ fontSize: 12, color: 'var(--theme-elevation-400)', margin: 0 }}>
+                  New submissions from the Contact form show up here.
+                </p>
               </div>
-            </div>
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginTop: 16 }}>
+                <DonutChart
+                  centerLabel={String(counts.inquiries)}
+                  centerSublabel="total"
+                  segments={inquirySegments}
+                />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {inquirySegments.map((row) => (
+                    <div key={row.label} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13 }}>
+                      <span
+                        style={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: 999,
+                          background: row.color,
+                          display: 'inline-block',
+                        }}
+                      />
+                      <span style={{ color: MUTED }}>{row.label}</span>
+                      <span style={{ marginLeft: 'auto', fontWeight: 600 }}>{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             <Link
               href="/admin/collections/inquiries"
               style={{
                 display: 'block',
                 marginTop: 16,
-                fontSize: 12.5,
+                fontSize: 13,
                 color: accent,
                 textDecoration: 'none',
                 fontWeight: 600,
@@ -252,7 +264,7 @@ const Dashboard: React.FC = async () => {
                     color: TEXT,
                   }}
                 >
-                  <span style={{ fontSize: 13.5 }}>
+                  <span style={{ fontSize: 14 }}>
                     <span style={{ color: accent, fontWeight: 600 }}>{item.collectionLabel}</span>{' '}
                     {item.title}
                   </span>

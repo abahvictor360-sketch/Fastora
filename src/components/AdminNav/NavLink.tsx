@@ -27,7 +27,7 @@ export const NavLink: React.FC<{
         textDecoration: 'none',
         color: isActive ? '#fff' : 'var(--theme-text)',
         background: isActive ? accent : 'transparent',
-        fontSize: 13.5,
+        fontSize: 14,
         fontWeight: isActive ? 600 : 500,
         transition: 'background 0.15s ease',
       }}
