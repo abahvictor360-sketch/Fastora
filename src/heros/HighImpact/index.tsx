@@ -4,13 +4,16 @@ import type { HeroData } from '@/heros/types'
 
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
+import { HeroScrollVideo } from './HeroScrollVideo'
 
 /**
  * High-impact hero — dark navy, editorial, no imagery.
  * A soft gold glow sits behind the headline and an oversized
  * "FASTORA" wordmark anchors the section, mirroring the reference layout.
+ * When a video is set on the hero, it's revealed below the wordmark and
+ * scrubbed by scroll position rather than autoplaying (see HeroScrollVideo).
  */
-export const HighImpactHero: React.FC<HeroData> = ({ links, richText }) => {
+export const HighImpactHero: React.FC<HeroData> = ({ links, media, richText }) => {
   return (
     <section className="relative overflow-hidden bg-primary text-primary-foreground">
       {/* ambient accent glow */}
@@ -76,6 +79,10 @@ export const HighImpactHero: React.FC<HeroData> = ({ links, richText }) => {
           FASTORA
         </span>
       </div>
+
+      {media && typeof media === 'object' && media.mimeType?.includes('video') && (
+        <HeroScrollVideo resource={media} />
+      )}
     </section>
   )
 }

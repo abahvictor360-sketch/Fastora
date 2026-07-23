@@ -9,11 +9,14 @@ import { CMSLink } from '../../components/Link'
 export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
   const { background = 'default', columns } = props
 
+  // Written as complete literal class strings (not built via template-literal
+  // interpolation) so Tailwind's static scanner can actually find and
+  // generate them — `` `lg:col-span-${n}` `` silently produces no CSS.
   const colsSpanClasses = {
-    full: '12',
-    half: '6',
-    oneThird: '4',
-    twoThirds: '8',
+    full: 'col-span-4 lg:col-span-12',
+    half: 'col-span-4 lg:col-span-6',
+    oneThird: 'col-span-4 lg:col-span-4',
+    twoThirds: 'col-span-4 lg:col-span-8',
   }
 
   const isDark = background === 'dark'
@@ -28,7 +31,7 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
 
           return (
             <div
-              className={cn(`col-span-4 lg:col-span-${colsSpanClasses[size!]}`, {
+              className={cn(colsSpanClasses[size!], {
                 'md:col-span-2': size !== 'full',
               })}
               key={index}
