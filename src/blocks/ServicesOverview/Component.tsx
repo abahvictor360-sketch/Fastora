@@ -67,8 +67,10 @@ export const ServicesOverviewBlock: React.FC<ServicesOverviewBlockProps> = async
                       htmlElement={null}
                     />
                   )}
-                  <h3 className="mt-6 text-2xl font-semibold">{service.title}</h3>
-                  <p className="mt-3 max-w-sm text-sm text-primary-foreground/60">
+                  <h3 className="mt-6 text-2xl font-semibold transition-colors group-hover:text-primary">
+                    {service.title}
+                  </h3>
+                  <p className="mt-3 max-w-sm text-sm text-primary-foreground/60 transition-colors group-hover:text-primary/70">
                     {service.summary}
                   </p>
                 </div>

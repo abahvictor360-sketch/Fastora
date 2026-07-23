@@ -107,6 +107,21 @@
     --tw-prose-hr: var(--color-border);
   }
 
+  /* Used inside dark navy panels (e.g. Content block's "dark" background)
+     where the default .prose colors would render dark-on-dark. Written as
+     a compound selector so it reliably wins over .prose regardless of
+     Tailwind's utility output order. */
+  .prose-invert.prose {
+    --tw-prose-body: var(--color-primary-foreground);
+    --tw-prose-headings: var(--color-primary-foreground);
+    --tw-prose-links: var(--color-secondary);
+    --tw-prose-bold: var(--color-primary-foreground);
+    --tw-prose-bullets: var(--color-secondary);
+    --tw-prose-quotes: var(--color-primary-foreground);
+    --tw-prose-quote-borders: color-mix(in srgb, var(--color-primary-foreground) 20%, transparent);
+    --tw-prose-hr: color-mix(in srgb, var(--color-primary-foreground) 20%, transparent);
+  }
+
   ::selection {
     background: var(--color-accent);
     color: var(--color-accent-foreground);

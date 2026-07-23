@@ -14,7 +14,7 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 // which need real logic — live collection queries, a form — that the
 // block-based layout can't express. Their Pages documents exist only to
 // make the header copy CMS-editable; this catch-all must never render them.
-const RESERVED_SLUGS = ['home', 'services', 'work', 'contact', 'insights', 'login']
+const RESERVED_SLUGS = ['home', 'services', 'case-studies', 'contact', 'insights', 'login']
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })

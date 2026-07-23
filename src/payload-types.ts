@@ -261,6 +261,7 @@ export interface Page {
         | ServicesOverviewBlock
         | WhyFastoraBlock
         | OurProcessBlock
+        | AudienceGridBlock
         | SelectedWorkBlock
         | TestimonialsBlockType
         | FAQBlock
@@ -534,6 +535,10 @@ export interface CallToActionBlock {
  * via the `definition` "ContentBlock".
  */
 export interface ContentBlock {
+  /**
+   * Dark and card treatments help break up long runs of text sections.
+   */
+  background?: ('default' | 'dark' | 'card') | null;
   columns?:
     | {
         size?: ('oneThird' | 'half' | 'twoThirds' | 'full') | null;
@@ -678,6 +683,24 @@ export interface OurProcessBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'ourProcess';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AudienceGridBlock".
+ */
+export interface AudienceGridBlock {
+  eyebrow?: string | null;
+  heading: string;
+  description?: string | null;
+  items?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'audienceGrid';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1202,6 +1225,7 @@ export interface PagesSelect<T extends boolean = true> {
         servicesOverview?: T | ServicesOverviewBlockSelect<T>;
         whyFastora?: T | WhyFastoraBlockSelect<T>;
         ourProcess?: T | OurProcessBlockSelect<T>;
+        audienceGrid?: T | AudienceGridBlockSelect<T>;
         selectedWork?: T | SelectedWorkBlockSelect<T>;
         testimonialsBlock?: T | TestimonialsBlockTypeSelect<T>;
         faq?: T | FAQBlockSelect<T>;
@@ -1250,6 +1274,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
  * via the `definition` "ContentBlock_select".
  */
 export interface ContentBlockSelect<T extends boolean = true> {
+  background?: T;
   columns?:
     | T
     | {
@@ -1336,6 +1361,23 @@ export interface OurProcessBlockSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AudienceGridBlock_select".
+ */
+export interface AudienceGridBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  items?:
+    | T
+    | {
+        label?: T;
         id?: T;
       };
   id?: T;

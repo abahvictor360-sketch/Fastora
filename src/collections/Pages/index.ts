@@ -10,6 +10,7 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { ServicesOverview } from '../../blocks/ServicesOverview/config'
 import { WhyFastora } from '../../blocks/WhyFastora/config'
 import { OurProcess } from '../../blocks/OurProcess/config'
+import { AudienceGrid } from '../../blocks/AudienceGrid/config'
 import { SelectedWork } from '../../blocks/SelectedWork/config'
 import { TestimonialsBlock } from '../../blocks/TestimonialsBlock/config'
 import { FAQ } from '../../blocks/FAQ/config'
@@ -121,6 +122,7 @@ export const Pages: CollectionConfig = {
                 ServicesOverview,
                 WhyFastora,
                 OurProcess,
+                AudienceGrid,
                 SelectedWork,
                 TestimonialsBlock,
                 FAQ,

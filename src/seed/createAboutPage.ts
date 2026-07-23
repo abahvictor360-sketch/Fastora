@@ -23,33 +23,59 @@ async function run() {
     ),
     layout: [
       {
+        blockType: 'whyFastora' as const,
+        eyebrow: 'At a glance',
+        heading: 'A snapshot of how we work',
+        points: [
+          {
+            stat: '10',
+            title: 'Integrated services',
+            description:
+              'From strategic communications to digital marketing, delivered by one accountable team.',
+          },
+          {
+            stat: '6',
+            title: 'Core values',
+            description:
+              'Principles that guide every recommendation and every project we take on.',
+          },
+          {
+            stat: '100%',
+            title: 'In-house thinking',
+            description:
+              'No subcontracted black boxes — every strategy is developed and executed by our own team.',
+          },
+        ],
+      },
+      {
         blockType: 'content' as const,
+        background: 'default' as const,
         columns: [
           {
             size: 'full' as const,
             richText: richTextHeadingAndParagraphs('Our story', [
               'Fastora was founded on a simple observation: many businesses are genuinely good at what they do, with capable teams and valuable services, yet they are overlooked because they struggle to communicate their value.',
-              "Inconsistent messaging. Websites that don't reflect the quality of the work behind them. Content with no clear direction. Brands that never quite explain why people should choose them.",
-              'Fastora exists to close that gap — helping businesses communicate more effectively so they become easier to understand, easier to trust, and harder to ignore.',
+              "Inconsistent messaging. Websites that don't reflect the quality of the work behind them. Content with no clear direction. Fastora exists to close that gap — helping businesses become easier to understand, easier to trust, and harder to ignore.",
             ]),
           },
         ],
       },
       {
         blockType: 'content' as const,
+        background: 'dark' as const,
         columns: [
           {
             size: 'full' as const,
             richText: richTextHeadingAndParagraphs('The problem we exist to solve', [
-              "Every day, good businesses miss opportunities — not because they lack quality or work ethic, but because people don't fully understand who they are, what they do, or why they matter.",
-              'Businesses are judged long before a conversation begins. A website, a social profile, a single post can decide whether someone engages or moves on — and too often, communication creates confusion instead of confidence.',
-              'We believe communication is one of the most valuable assets a business can invest in. When businesses communicate well, people understand their value faster, trust grows more easily, and better opportunities follow.',
+              "Every day, good businesses miss opportunities — not because they lack quality, but because people don't fully understand who they are, what they do, or why they matter.",
+              'We believe communication is one of the most valuable assets a business can invest in. When businesses communicate well, trust grows faster and better opportunities follow.',
             ]),
           },
         ],
       },
       {
         blockType: 'content' as const,
+        background: 'card' as const,
         columns: [
           {
             size: 'half' as const,
@@ -111,13 +137,32 @@ async function run() {
         ],
       },
       {
+        blockType: 'audienceGrid' as const,
+        eyebrow: 'Who we serve',
+        heading: 'Organisations we work with',
+        description:
+          "Regardless of industry, we're drawn to organisations that are serious about growth and committed to improving how they communicate.",
+        items: [
+          { label: 'Small and medium-sized businesses' },
+          { label: 'Startups' },
+          { label: 'Corporate organisations' },
+          { label: 'Professional service firms' },
+          { label: 'Founders and executives' },
+          { label: 'Non-profit organisations' },
+          { label: 'Educational institutions' },
+          { label: 'Government and development organisations' },
+          { label: 'Personal brands with established businesses' },
+        ],
+      },
+      {
         blockType: 'content' as const,
+        background: 'card' as const,
         columns: [
           {
             size: 'full' as const,
             richText: richTextHeadingAndParagraphs('Our approach', [
-              "Many agencies focus on producing more content. We focus on helping clients communicate more effectively. We don't start with templates or trends — we start by understanding the business and the communication challenge in front of it.",
-              'Every project we take on is guided by the same promise: to help good businesses become easier to understand, easier to trust, and harder to ignore. Communication should never create confusion — it should build confidence.',
+              "Many agencies focus on producing more content. We focus on helping clients communicate more effectively — starting with understanding the business, not a template.",
+              'Every project we take on is guided by the same promise: to help good businesses become easier to understand, easier to trust, and harder to ignore.',
             ]),
           },
         ],

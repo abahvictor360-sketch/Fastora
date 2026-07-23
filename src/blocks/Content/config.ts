@@ -68,6 +68,19 @@ export const Content: Block = {
   interfaceName: 'ContentBlock',
   fields: [
     {
+      name: 'background',
+      type: 'select',
+      defaultValue: 'default',
+      admin: {
+        description: 'Dark and card treatments help break up long runs of text sections.',
+      },
+      options: [
+        { label: 'Default', value: 'default' },
+        { label: 'Dark panel', value: 'dark' },
+        { label: 'Card', value: 'card' },
+      ],
+    },
+    {
       name: 'columns',
       type: 'array',
       admin: {
