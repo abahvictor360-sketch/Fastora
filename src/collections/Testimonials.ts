@@ -14,6 +14,14 @@ export const Testimonials: CollectionConfig = {
   admin: {
     defaultColumns: ['clientName', 'company', 'updatedAt'],
     useAsTitle: 'clientName',
+    components: {
+      beforeListTable: [
+        {
+          path: '@/components/AdminListCreateBanner',
+          clientProps: { collectionSlug: 'testimonials', label: 'Testimonial' },
+        },
+      ],
+    },
   },
   fields: [
     {

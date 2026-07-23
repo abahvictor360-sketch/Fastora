@@ -52,6 +52,14 @@ export const Posts: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
+    components: {
+      beforeListTable: [
+        {
+          path: '@/components/AdminListCreateBanner',
+          clientProps: { collectionSlug: 'posts', label: 'Insight' },
+        },
+      ],
+    },
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({

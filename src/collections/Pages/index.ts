@@ -46,6 +46,14 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
+    components: {
+      beforeListTable: [
+        {
+          path: '@/components/AdminListCreateBanner',
+          clientProps: { collectionSlug: 'pages', label: 'Page' },
+        },
+      ],
+    },
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({

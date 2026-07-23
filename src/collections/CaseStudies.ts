@@ -37,6 +37,14 @@ export const CaseStudies: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'clientName', 'industry', 'updatedAt'],
     useAsTitle: 'title',
+    components: {
+      beforeListTable: [
+        {
+          path: '@/components/AdminListCreateBanner',
+          clientProps: { collectionSlug: 'case-studies', label: 'Work' },
+        },
+      ],
+    },
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({ slug: data?.slug, collection: 'case-studies', req }),

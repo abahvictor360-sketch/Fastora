@@ -32,6 +32,14 @@ export const Services: CollectionConfig = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     useAsTitle: 'title',
+    components: {
+      beforeListTable: [
+        {
+          path: '@/components/AdminListCreateBanner',
+          clientProps: { collectionSlug: 'services', label: 'Service' },
+        },
+      ],
+    },
     livePreview: {
       url: ({ data, req }) =>
         generatePreviewPath({ slug: data?.slug, collection: 'services', req }),

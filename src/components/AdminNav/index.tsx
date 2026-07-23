@@ -29,78 +29,32 @@ export default async function Nav() {
 
   const items = [
     { href: '/admin', label: 'Dashboard', icon: icons.dashboard, exact: true },
-    {
-      href: '/admin/collections/pages',
-      label: 'Pages',
-      icon: icons.pages,
-      badge: pages.totalDocs,
-      createHref: '/admin/collections/pages/create',
-    },
-    {
-      href: '/admin/collections/posts',
-      label: 'Insights',
-      icon: icons.posts,
-      badge: posts.totalDocs,
-      createHref: '/admin/collections/posts/create',
-    },
-    {
-      href: '/admin/collections/services',
-      label: 'Services',
-      icon: icons.services,
-      badge: services.totalDocs,
-      createHref: '/admin/collections/services/create',
-    },
-    {
-      href: '/admin/collections/case-studies',
-      label: 'Work',
-      icon: icons.work,
-      badge: caseStudies.totalDocs,
-      createHref: '/admin/collections/case-studies/create',
-    },
+    { href: '/admin/collections/pages', label: 'Pages', icon: icons.pages, badge: pages.totalDocs },
+    { href: '/admin/collections/posts', label: 'Insights', icon: icons.posts, badge: posts.totalDocs },
+    { href: '/admin/collections/services', label: 'Services', icon: icons.services, badge: services.totalDocs },
+    { href: '/admin/collections/case-studies', label: 'Work', icon: icons.work, badge: caseStudies.totalDocs },
     {
       href: '/admin/collections/testimonials',
       label: 'Testimonials',
       icon: icons.testimonials,
       badge: testimonials.totalDocs,
-      createHref: '/admin/collections/testimonials/create',
     },
     {
       href: '/admin/collections/inquiries',
       label: 'Inquiries',
       icon: icons.inquiries,
       badge: inquiriesNew.totalDocs,
-      // No createHref: inquiries only ever come in through the public
-      // contact form, an admin has nothing to "add" here.
     },
-    {
-      href: '/admin/collections/media',
-      label: 'Media Files',
-      icon: icons.media,
-      badge: media.totalDocs,
-      createHref: '/admin/collections/media/create',
-    },
+    { href: '/admin/collections/media', label: 'Media Files', icon: icons.media, badge: media.totalDocs },
     {
       href: '/admin/collections/categories',
       label: 'Categories',
       icon: icons.categories,
       badge: categories.totalDocs,
-      createHref: '/admin/collections/categories/create',
     },
-    {
-      href: '/admin/collections/users',
-      label: 'Users',
-      icon: icons.users,
-      badge: users.totalDocs,
-      createHref: '/admin/collections/users/create',
-    },
+    { href: '/admin/collections/users', label: 'Users', icon: icons.users, badge: users.totalDocs },
     { href: '/admin/globals/site-settings', label: 'Site Settings', icon: icons.settings },
-  ].map((item) => ({
-    ...item,
-    // Every collection (not the Dashboard link or the Site Settings global,
-    // which have no "manage a list of records" meaning) gets the hover
-    // pencil/+ shortcuts.
-    showManage: item.href.startsWith('/admin/collections/'),
-  }))
+  ]
 
   return (
     <>

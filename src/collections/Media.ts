@@ -22,6 +22,16 @@ export const Media: CollectionConfig = {
     read: anyone,
     update: authenticatedNotDemo,
   },
+  admin: {
+    components: {
+      beforeListTable: [
+        {
+          path: '@/components/AdminListCreateBanner',
+          clientProps: { collectionSlug: 'media', label: 'Media File' },
+        },
+      ],
+    },
+  },
   fields: [
     {
       name: 'alt',

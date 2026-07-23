@@ -17,6 +17,14 @@ export const Users: CollectionConfig = {
   admin: {
     defaultColumns: ['name', 'email', 'role'],
     useAsTitle: 'name',
+    components: {
+      beforeListTable: [
+        {
+          path: '@/components/AdminListCreateBanner',
+          clientProps: { collectionSlug: 'users', label: 'User' },
+        },
+      ],
+    },
   },
   auth: true,
   fields: [

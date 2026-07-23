@@ -8,34 +8,6 @@
   --fastora-accent-hover: #d9773d;
 }
 
-/* Per-item "manage" (pencil) and "add new" (+) shortcuts in the sidebar —
-   hidden until the row is hovered/focused so the nav doesn't look cluttered
-   at rest, but always reachable via keyboard (focus-within). */
-.fastora-nav-link {
-  &__actions {
-    opacity: 0;
-    transition: opacity 0.1s ease;
-
-    a {
-      transition: background 0.1s ease;
-
-      &:hover {
-        background: color-mix(in srgb, currentColor 18%, transparent);
-      }
-
-      &:focus-visible {
-        outline: 2px solid var(--fastora-accent);
-        outline-offset: 1px;
-      }
-    }
-  }
-
-  &:hover &__actions,
-  &:focus-within &__actions {
-    opacity: 1;
-  }
-}
-
 /* ------------------------------------------------------------------ */
 /*  Login screen                                                       */
 /* ------------------------------------------------------------------ */

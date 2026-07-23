@@ -14,6 +14,14 @@ export const Categories: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
+    components: {
+      beforeListTable: [
+        {
+          path: '@/components/AdminListCreateBanner',
+          clientProps: { collectionSlug: 'categories', label: 'Category' },
+        },
+      ],
+    },
   },
   fields: [
     {
