@@ -101,6 +101,8 @@ export default async function Nav() {
       </div>
 
       <div style={{ borderTop: '1px solid var(--theme-border-color)', paddingTop: 12, marginTop: 12 }}>
+        {/* Payload admin logout route (not a Next page) — intentional full navigation. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a
           href="/admin/logout"
           style={{

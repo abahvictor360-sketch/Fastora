@@ -182,18 +182,21 @@ export const DonutChart: React.FC<{
   const radius = (size - strokeWidth) / 2
   const circumference = 2 * Math.PI * radius
 
-  let offsetAccum = 0
+  // Cumulative start value for each segment, computed purely so we never
+  // mutate a render-scoped variable inside the map below.
+  const startValues = segments.map((_, i) =>
+    segments.slice(0, i).reduce((sum, s) => sum + s.value, 0),
+  )
 
   return (
     <div style={{ position: 'relative', width: size, height: size }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke={GRID} strokeWidth={strokeWidth} />
-        {segments.map((seg) => {
+        {segments.map((seg, i) => {
           const fraction = seg.value / total
           const dash = fraction * circumference
           const gap = circumference - dash
-          const rotation = (offsetAccum / total) * 360 - 90
-          offsetAccum += seg.value
+          const rotation = (startValues[i] / total) * 360 - 90
           if (seg.value === 0) return null
           return (
             <circle

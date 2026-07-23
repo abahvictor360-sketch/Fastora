@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable react-hooks/refs -- clickable-card attaches refs from useClickableCard to real elements; not reading ref.current during render */
 import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'

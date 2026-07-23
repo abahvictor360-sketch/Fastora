@@ -1,9 +1,10 @@
+import Link from 'next/link'
 import React from 'react'
 
 const AfterLogin: React.FC = () => {
   return (
     <div className="fastora-login-footer">
-      <a href="/">← Back to fastora.com</a>
+      <Link href="/">← Back to fastora.com</Link>
     </div>
   )
 }

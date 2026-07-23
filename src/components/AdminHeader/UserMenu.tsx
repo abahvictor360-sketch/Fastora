@@ -48,12 +48,15 @@ export const UserMenu: React.FC = () => {
       </button>
       {open && (
         <div className="fastora-user-menu__dropdown" role="menu">
+          {/* Payload admin routes (not Next pages) — intentional full navigation. */}
+          {/* eslint-disable @next/next/no-html-link-for-pages */}
           <a href="/admin/account" role="menuitem">
             Account
           </a>
           <a href="/admin/logout" role="menuitem">
             Log out
           </a>
+          {/* eslint-enable @next/next/no-html-link-for-pages */}
         </div>
       )}
     </div>
