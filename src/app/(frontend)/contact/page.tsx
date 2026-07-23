@@ -5,16 +5,29 @@ import React from 'react'
 
 import { PageHeader } from '@/components/PageHeader'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { generateMeta } from '@/utilities/generateMeta'
+import { queryUtilityPage } from '@/utilities/queryUtilityPage'
 import { ContactForm } from './ContactForm'
 
-export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Start a project with Fastora. Tell us what you want to achieve.',
+const FALLBACK = {
+  eyebrow: 'Contact',
+  heading: "Let's start your project",
+  description: "Tell us where you want to go. We'll come back with how to get there — fast.",
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await queryUtilityPage('contact')
+  return generateMeta({
+    doc: page || {
+      meta: { title: 'Contact', description: FALLBACK.description },
+    },
+  })
 }
 
 export default async function ContactPage() {
   const payload = await getPayload({ config: configPromise })
-  const [{ docs: services }, siteSettings] = await Promise.all([
+  const [page, { docs: services }, siteSettings] = await Promise.all([
+    queryUtilityPage('contact'),
     payload.find({
       collection: 'services',
       depth: 0,
@@ -25,15 +38,20 @@ export default async function ContactPage() {
     }),
     getCachedGlobal('site-settings', 0)(),
   ])
+  const header = {
+    eyebrow: page?.pageHeaderEyebrow || FALLBACK.eyebrow,
+    heading: page?.pageHeaderHeading || FALLBACK.heading,
+    description: page?.pageHeaderDescription || FALLBACK.description,
+  }
 
   const serviceOptions = services.map((s) => ({ id: s.id, title: s.title }))
 
   return (
     <div>
       <PageHeader
-        eyebrow="Contact"
-        title="Let's start your project"
-        description="Tell us where you want to go. We'll come back with how to get there — fast."
+        eyebrow={header.eyebrow}
+        title={header.heading}
+        description={header.description}
       />
 
       <section className="container grid gap-12 py-20 md:py-24 lg:grid-cols-[1fr_18rem]">

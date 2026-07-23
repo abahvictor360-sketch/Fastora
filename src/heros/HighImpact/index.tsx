@@ -1,6 +1,6 @@
 import React from 'react'
 
-import type { Page } from '@/payload-types'
+import type { HeroData } from '@/heros/types'
 
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
@@ -10,7 +10,7 @@ import RichText from '@/components/RichText'
  * A soft terracotta glow sits behind the headline and an oversized
  * "FASTORA" wordmark anchors the section, mirroring the reference layout.
  */
-export const HighImpactHero: React.FC<Page['hero']> = ({ links, richText }) => {
+export const HighImpactHero: React.FC<HeroData> = ({ links, richText }) => {
   return (
     <section className="relative overflow-hidden bg-primary text-primary-foreground">
       {/* ambient accent glow */}

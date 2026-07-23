@@ -14,12 +14,10 @@ async function run() {
 
   const data = {
     title: 'About',
-    hero: {
-      type: 'lowImpact' as const,
-      richText: richTextHeadingAndParagraphs('Built for brands who move fast', [
-        "Fastora started with a simple frustration: most agencies are slow, and slow costs businesses momentum they can't get back. We built Fastora to be the opposite — sharp strategy and fast execution, from one accountable team.",
-      ]),
-    },
+    heroType: 'lowImpact' as const,
+    heroRichText: richTextHeadingAndParagraphs('Built for brands who move fast', [
+      "Fastora started with a simple frustration: most agencies are slow, and slow costs businesses momentum they can't get back. We built Fastora to be the opposite — sharp strategy and fast execution, from one accountable team.",
+    ]),
     layout: [
       {
         blockType: 'content' as const,

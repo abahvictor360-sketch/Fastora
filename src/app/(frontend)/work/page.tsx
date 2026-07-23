@@ -6,29 +6,45 @@ import React from 'react'
 
 import { Media } from '@/components/Media'
 import { PageHeader } from '@/components/PageHeader'
+import { generateMeta } from '@/utilities/generateMeta'
+import { queryUtilityPage } from '@/utilities/queryUtilityPage'
 
-export const metadata: Metadata = {
-  title: 'Work',
-  description: 'Selected case studies — the results we have delivered for our clients.',
+const FALLBACK = {
+  eyebrow: 'Selected work',
+  heading: 'Results, not just deliverables',
+  description: 'A look at the outcomes we have engineered for the teams we partner with.',
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await queryUtilityPage('work')
+  return generateMeta({
+    doc: page || {
+      meta: { title: 'Work', description: FALLBACK.description },
+    },
+  })
 }
 
 export default async function WorkPage() {
   const payload = await getPayload({ config: configPromise })
-  const { docs: caseStudies } = await payload.find({
-    collection: 'case-studies',
-    depth: 1,
-    limit: 100,
-    sort: 'order',
-    where: { _status: { equals: 'published' } },
-  })
+  const [page, { docs: caseStudies }] = await Promise.all([
+    queryUtilityPage('work'),
+    payload.find({
+      collection: 'case-studies',
+      depth: 1,
+      limit: 100,
+      sort: 'order',
+      where: { _status: { equals: 'published' } },
+    }),
+  ])
+  const header = {
+    eyebrow: page?.pageHeaderEyebrow || FALLBACK.eyebrow,
+    heading: page?.pageHeaderHeading || FALLBACK.heading,
+    description: page?.pageHeaderDescription || FALLBACK.description,
+  }
 
   return (
     <div>
-      <PageHeader
-        eyebrow="Selected work"
-        title="Results, not just deliverables"
-        description="A look at the outcomes we have engineered for the teams we partner with."
-      />
+      <PageHeader eyebrow={header.eyebrow} title={header.heading} description={header.description} />
 
       <section className="container pb-24 pt-16">
         {caseStudies.length ? (

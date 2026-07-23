@@ -43,12 +43,12 @@ export default async function HomePage() {
     )
   }
 
-  const { hero, layout } = page
+  const { heroType, heroRichText, heroLinks, heroMedia, layout } = page
 
   return (
     <article>
       {draft && <LivePreviewListener />}
-      <RenderHero {...hero} />
+      <RenderHero type={heroType} richText={heroRichText} links={heroLinks} media={heroMedia} />
       <RenderBlocks blocks={layout} />
     </article>
   )

@@ -377,19 +377,17 @@ async function run() {
 
   const homeData = {
     title: 'Home',
-    hero: {
-      type: 'highImpact' as const,
-      richText: richTextHeadingAndParagraphs(
-        'Digital services and social media, engineered for speed.',
-        [
-          'Fastora is the agency built for brands who move fast — sharp strategy, fast execution, work that compounds.',
-        ],
-      ),
-      links: [
-        { link: { type: 'custom' as const, url: '/contact', label: 'Start a project', appearance: 'default' as const } },
-        { link: { type: 'custom' as const, url: '/work', label: 'See our work', appearance: 'outline' as const } },
+    heroType: 'highImpact' as const,
+    heroRichText: richTextHeadingAndParagraphs(
+      'Digital services and social media, engineered for speed.',
+      [
+        'Fastora is the agency built for brands who move fast — sharp strategy, fast execution, work that compounds.',
       ],
-    },
+    ),
+    heroLinks: [
+      { link: { type: 'custom' as const, url: '/contact', label: 'Start a project', appearance: 'default' as const } },
+      { link: { type: 'custom' as const, url: '/work', label: 'See our work', appearance: 'outline' as const } },
+    ],
     layout: [
       {
         blockType: 'servicesOverview' as const,

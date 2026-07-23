@@ -3,6 +3,7 @@ import * as migration_20260722_000000_brand_palette from './20260722_000000_bran
 import * as migration_20260722_010000_tags_and_roles from './20260722_010000_tags_and_roles';
 import * as migration_20260722_140000_add_demo_role from './20260722_140000_add_demo_role';
 import * as migration_20260723_000000_posts_version_tags from './20260723_000000_posts_version_tags';
+import * as migration_20260723_010000_pages_page_header from './20260723_010000_pages_page_header';
 
 export const migrations = [
   {
@@ -29,5 +30,10 @@ export const migrations = [
     up: migration_20260723_000000_posts_version_tags.up,
     down: migration_20260723_000000_posts_version_tags.down,
     name: '20260723_000000_posts_version_tags',
+  },
+  {
+    up: migration_20260723_010000_pages_page_header.up,
+    down: migration_20260723_010000_pages_page_header.down,
+    name: '20260723_010000_pages_page_header',
   },
 ];

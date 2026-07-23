@@ -1,6 +1,6 @@
 import React from 'react'
 
-import type { Page } from '@/payload-types'
+import type { HeroData } from '@/heros/types'
 
 import { HighImpactHero } from '@/heros/HighImpact'
 import { LowImpactHero } from '@/heros/LowImpact'
@@ -12,14 +12,12 @@ const heroes = {
   mediumImpact: MediumImpactHero,
 }
 
-export const RenderHero: React.FC<Page['hero']> = (props) => {
-  const { type } = props || {}
-
+export const RenderHero: React.FC<HeroData> = ({ type, richText, links, media }) => {
   if (!type || type === 'none') return null
 
   const HeroToRender = heroes[type]
 
   if (!HeroToRender) return null
 
-  return <HeroToRender {...props} />
+  return <HeroToRender links={links} media={media} richText={richText} type={type} />
 }

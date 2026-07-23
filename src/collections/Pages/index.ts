@@ -13,7 +13,7 @@ import { SelectedWork } from '../../blocks/SelectedWork/config'
 import { TestimonialsBlock } from '../../blocks/TestimonialsBlock/config'
 import { FAQ } from '../../blocks/FAQ/config'
 import { LatestInsights } from '../../blocks/LatestInsights/config'
-import { hero } from '@/heros/config'
+import { heroFields } from '@/heros/config'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
@@ -72,8 +72,32 @@ export const Pages: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
-          fields: [hero],
+          fields: heroFields,
           label: 'Hero',
+        },
+        {
+          fields: [
+            {
+              name: 'pageHeaderEyebrow',
+              type: 'text',
+              label: 'Eyebrow',
+              admin: {
+                description:
+                  'Used by utility pages (Services, Work, Contact) that render their own listing/form below a simple header instead of the block-based Content layout.',
+              },
+            },
+            {
+              name: 'pageHeaderHeading',
+              type: 'text',
+              label: 'Heading',
+            },
+            {
+              name: 'pageHeaderDescription',
+              type: 'textarea',
+              label: 'Description',
+            },
+          ],
+          label: 'Page Header',
         },
         {
           fields: [
@@ -92,9 +116,10 @@ export const Pages: CollectionConfig = {
                 FAQ,
                 LatestInsights,
               ],
-              required: true,
               admin: {
                 initCollapsed: true,
+                description:
+                  'Optional for utility pages that use the Page Header tab instead (Services, Work, Contact).',
               },
             },
           ],

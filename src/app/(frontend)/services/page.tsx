@@ -2,33 +2,50 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
+import { draftMode } from 'next/headers'
 import React from 'react'
 
 import { Media } from '@/components/Media'
 import { PageHeader } from '@/components/PageHeader'
+import { generateMeta } from '@/utilities/generateMeta'
+import { queryUtilityPage } from '@/utilities/queryUtilityPage'
 
-export const metadata: Metadata = {
-  title: 'Services',
-  description: 'Digital services engineered for speed — from social growth to web and AI systems.',
+const FALLBACK = {
+  eyebrow: 'What we do',
+  heading: 'Services engineered for speed',
+  description: 'Every engagement is built to move fast and prove value early. Explore what we do.',
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await queryUtilityPage('services')
+  return generateMeta({
+    doc: page || {
+      meta: { title: 'Services', description: FALLBACK.description },
+    },
+  })
 }
 
 export default async function ServicesPage() {
   const payload = await getPayload({ config: configPromise })
-  const { docs: services } = await payload.find({
-    collection: 'services',
-    depth: 1,
-    limit: 100,
-    sort: 'order',
-    where: { _status: { equals: 'published' } },
-  })
+  const [page, { docs: services }] = await Promise.all([
+    queryUtilityPage('services'),
+    payload.find({
+      collection: 'services',
+      depth: 1,
+      limit: 100,
+      sort: 'order',
+      where: { _status: { equals: 'published' } },
+    }),
+  ])
+  const header = {
+    eyebrow: page?.pageHeaderEyebrow || FALLBACK.eyebrow,
+    heading: page?.pageHeaderHeading || FALLBACK.heading,
+    description: page?.pageHeaderDescription || FALLBACK.description,
+  }
 
   return (
     <div>
-      <PageHeader
-        eyebrow="What we do"
-        title="Services engineered for speed"
-        description="Every engagement is built to move fast and prove value early. Explore what we do."
-      />
+      <PageHeader eyebrow={header.eyebrow} title={header.heading} description={header.description} />
 
       <section className="container pb-24">
         {services.length ? (

@@ -199,64 +199,73 @@ export interface FolderInterface {
 export interface Page {
   id: number;
   title: string;
-  hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
+  heroType: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact';
+  heroRichText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
         version: number;
-      };
-      [k: string]: unknown;
-    } | null;
-    links?:
-      | {
-          link: {
-            type?: ('reference' | 'custom') | null;
-            newTab?: boolean | null;
-            reference?:
-              | ({
-                  relationTo: 'pages';
-                  value: number | Page;
-                } | null)
-              | ({
-                  relationTo: 'posts';
-                  value: number | Post;
-                } | null);
-            url?: string | null;
-            label: string;
-            /**
-             * Choose how the link should be rendered.
-             */
-            appearance?: ('default' | 'outline') | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    /**
-     * Optional. High Impact falls back to a bold gradient when left empty.
-     */
-    media?: (number | null) | Media;
-  };
-  layout: (
-    | CallToActionBlock
-    | ContentBlock
-    | MediaBlock
-    | ArchiveBlock
-    | ServicesOverviewBlock
-    | WhyFastoraBlock
-    | SelectedWorkBlock
-    | TestimonialsBlockType
-    | FAQBlock
-    | LatestInsightsBlock
-  )[];
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  heroLinks?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Optional. High Impact falls back to a bold gradient when left empty.
+   */
+  heroMedia?: (number | null) | Media;
+  /**
+   * Used by utility pages (Services, Work, Contact) that render their own listing/form below a simple header instead of the block-based Content layout.
+   */
+  pageHeaderEyebrow?: string | null;
+  pageHeaderHeading?: string | null;
+  pageHeaderDescription?: string | null;
+  /**
+   * Optional for utility pages that use the Page Header tab instead (Services, Work, Contact).
+   */
+  layout?:
+    | (
+        | CallToActionBlock
+        | ContentBlock
+        | MediaBlock
+        | ArchiveBlock
+        | ServicesOverviewBlock
+        | WhyFastoraBlock
+        | SelectedWorkBlock
+        | TestimonialsBlockType
+        | FAQBlock
+        | LatestInsightsBlock
+      )[]
+    | null;
   meta?: {
     title?: string | null;
     /**
@@ -1142,28 +1151,27 @@ export interface FoldersSelect<T extends boolean = true> {
  */
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
-  hero?:
+  heroType?: T;
+  heroRichText?: T;
+  heroLinks?:
     | T
     | {
-        type?: T;
-        richText?: T;
-        links?:
+        link?:
           | T
           | {
-              link?:
-                | T
-                | {
-                    type?: T;
-                    newTab?: T;
-                    reference?: T;
-                    url?: T;
-                    label?: T;
-                    appearance?: T;
-                  };
-              id?: T;
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
             };
-        media?: T;
+        id?: T;
       };
+  heroMedia?: T;
+  pageHeaderEyebrow?: T;
+  pageHeaderHeading?: T;
+  pageHeaderDescription?: T;
   layout?:
     | T
     | {
