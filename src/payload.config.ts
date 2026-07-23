@@ -66,6 +66,7 @@ export default buildConfig({
     components: {
       beforeLogin: ['@/components/BeforeLogin'],
       afterLogin: ['@/components/AfterLogin'],
+      header: ['@/components/AdminHeader'],
       Nav: '@/components/AdminNav',
       graphics: {
         Logo: '@/components/Graphics/Logo',
