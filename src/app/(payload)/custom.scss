@@ -8,17 +8,159 @@
   --fastora-accent-hover: #d9773d;
 }
 
-/* Custom copy block above the login form (see BeforeLogin component). */
-.fastora-login-intro {
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
+/* ------------------------------------------------------------------ */
+/*  Login screen                                                       */
+/* ------------------------------------------------------------------ */
 
-  p {
-    margin: 0 0 0.35rem;
+/* Full-bleed branded backdrop: a faint dot grid (echoes the public site's
+   hero texture) plus a soft accent glow anchored behind the card. */
+.login.template-minimal {
+  position: relative;
+  background-image:
+    radial-gradient(1px 1px at center, var(--theme-elevation-200) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(
+      55% 45% at 50% 0%,
+      color-mix(in srgb, var(--fastora-accent) 16%, transparent),
+      transparent 70%
+    );
+  }
+}
+
+.template-minimal__wrap {
+  position: relative;
+  z-index: 1;
+  padding: 2.75rem 2.5rem;
+  background: var(--theme-elevation-50);
+  border: 1px solid var(--theme-border-color);
+  border-radius: 20px;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.35);
+  animation: fastora-login-in 0.4s ease-out;
+}
+
+@keyframes fastora-login-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .template-minimal__wrap {
+    animation: none;
+  }
+}
+
+.login__brand {
+  margin-bottom: 1.75rem;
+}
+
+/* Copy block above the login form (see BeforeLogin component). */
+.fastora-login-intro {
+  margin-bottom: 1.75rem;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.4rem;
+    color: var(--theme-text);
   }
 
-  b {
-    font-size: 1.05rem;
+  p {
+    margin: 0;
+    line-height: 1.5;
+    color: var(--theme-elevation-500);
+  }
+}
+
+.login__form {
+  .form-submit {
+    margin-top: 0.5rem;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+/* Read-only demo account quick-access, rendered by DemoAccessCard. */
+.fastora-demo-access {
+  margin: 1.75rem 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px dashed var(--theme-border-color);
+  border-radius: 12px;
+  background: var(--theme-elevation-100);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  &__title {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--theme-text);
+  }
+
+  &__desc {
+    margin: 0.25rem 0 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--theme-elevation-500);
+  }
+
+  &__button {
+    align-self: flex-start;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--fastora-accent);
+    background: color-mix(in srgb, var(--fastora-accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--fastora-accent) 35%, transparent);
+    border-radius: 8px;
+    cursor: pointer;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease;
+
+    &:hover {
+      background: color-mix(in srgb, var(--fastora-accent) 20%, transparent);
+      border-color: var(--fastora-accent);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--fastora-accent);
+      outline-offset: 2px;
+    }
+  }
+}
+
+/* "Back to fastora.com" link, rendered by AfterLogin. */
+.fastora-login-footer {
+  margin-top: 1.75rem;
+  text-align: center;
+
+  a {
+    font-size: 0.8125rem;
+    color: var(--theme-elevation-500);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--fastora-accent);
+    }
   }
 }
 
@@ -46,16 +188,6 @@ a:not(.btn) {
 .field-type .rs__control--is-focused {
   border-color: var(--fastora-accent) !important;
   box-shadow: 0 0 0 1px var(--fastora-accent) !important;
-}
-
-/* Give the login screen a subtle branded backdrop. */
-.template-minimal,
-.login {
-  background-image: radial-gradient(
-    60% 60% at 50% 0%,
-    rgba(200, 100, 47, 0.12),
-    transparent 70%
-  );
 }
 
 /* Page canvas behind the custom Nav + Dashboard, using Payload's own
