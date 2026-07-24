@@ -66,8 +66,10 @@ export const heroFields: Field[] = [
     name: 'heroMedia',
     type: 'upload',
     admin: {
-      condition: (_, siblingData) => ['highImpact', 'mediumImpact'].includes(siblingData?.heroType),
-      description: 'Optional. High Impact falls back to a bold gradient when left empty.',
+      condition: (_, siblingData) =>
+        ['highImpact', 'mediumImpact', 'lowImpact'].includes(siblingData?.heroType),
+      description:
+        'Optional. High Impact falls back to a bold gradient when left empty. Low Impact shows it as a dark background behind the text.',
     },
     label: 'Media',
     relationTo: 'media',

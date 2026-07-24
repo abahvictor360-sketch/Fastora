@@ -240,7 +240,7 @@ export interface Page {
       }[]
     | null;
   /**
-   * Optional. High Impact falls back to a bold gradient when left empty.
+   * Optional. High Impact falls back to a bold gradient when left empty. Low Impact shows it as a dark background behind the text.
    */
   heroMedia?: (number | null) | Media;
   /**
