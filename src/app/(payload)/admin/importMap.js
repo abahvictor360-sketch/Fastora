@@ -29,6 +29,7 @@ import { default as default_5b83c0d03ff747b791bd44d436d1f222 } from '@/component
 import { default as default_a0dbd59c719a0d4b6169140b0f7e200a } from '@/components/Graphics/Logo'
 import { default as default_380afaeea2d45f396e81f036010b9e99 } from '@/components/AfterLogin'
 import { default as default_8a7ab0eb7ab5c511aba12e68480bfe5e } from '@/components/BeforeLogin'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { default as default_d2e5e8cdcf265e3c61c4d683161d9698 } from '@/components/AdminDashboard'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -65,6 +66,7 @@ export const importMap = {
   "@/components/Graphics/Logo#default": default_a0dbd59c719a0d4b6169140b0f7e200a,
   "@/components/AfterLogin#default": default_380afaeea2d45f396e81f036010b9e99,
   "@/components/BeforeLogin#default": default_8a7ab0eb7ab5c511aba12e68480bfe5e,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@/components/AdminDashboard#default": default_d2e5e8cdcf265e3c61c4d683161d9698,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

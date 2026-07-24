@@ -92,7 +92,7 @@ export const HeroScrollVideo: React.FC<Props> = ({ resource }) => {
               preload="auto"
               aria-label={resource.alt || 'Fastora product preview'}
             >
-              <source src={getMediaUrl(`/media/${resource.filename}`)} type={resource.mimeType || 'video/mp4'} />
+              <source src={getMediaUrl(resource.url, resource.updatedAt)} type={resource.mimeType || 'video/mp4'} />
             </video>
           </div>
         </div>

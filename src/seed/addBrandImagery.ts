@@ -129,16 +129,18 @@ async function run() {
   })
   if (aboutPage.docs[0]) {
     const layout = [...(aboutPage.docs[0].layout || [])]
-    const alreadyHasImage = layout.some((block) => block.blockType === 'mediaBlock')
-    if (!alreadyHasImage) {
+    const existingImageIndex = layout.findIndex((block) => block.blockType === 'mediaBlock')
+    if (existingImageIndex === -1) {
       layout.splice(2, 0, { blockType: 'mediaBlock', media: aboutPhoto.id })
-      await payload.update({
-        collection: 'pages',
-        id: aboutPage.docs[0].id,
-        data: { layout },
-      })
-      payload.logger.info('Inserted image block on About page')
+    } else {
+      layout[existingImageIndex] = { blockType: 'mediaBlock', media: aboutPhoto.id }
     }
+    await payload.update({
+      collection: 'pages',
+      id: aboutPage.docs[0].id,
+      data: { layout },
+    })
+    payload.logger.info('Set About page image block')
   }
 
   payload.logger.info('Brand imagery seed complete.')
