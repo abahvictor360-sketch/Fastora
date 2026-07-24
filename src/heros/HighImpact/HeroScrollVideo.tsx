@@ -77,25 +77,18 @@ export const HeroScrollVideo: React.FC<Props> = ({ resource }) => {
   }, [])
 
   return (
-    <div ref={trackRef} className="relative h-[200vh]">
-      <div className="sticky top-0 flex h-screen items-center justify-center">
-        <div
-          className="container relative z-10"
-          data-reveal="scale"
+    <div ref={trackRef} className="relative h-[200vh]" data-reveal="up">
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <video
+          ref={videoRef}
+          className="h-full w-full object-cover"
+          muted
+          playsInline
+          preload="auto"
+          aria-label={resource.alt || 'Fastora product preview'}
         >
-          <div className="mx-auto max-w-5xl overflow-hidden rounded-[1.5rem] border border-primary-foreground/10 shadow-2xl">
-            <video
-              ref={videoRef}
-              className="block w-full"
-              muted
-              playsInline
-              preload="auto"
-              aria-label={resource.alt || 'Fastora product preview'}
-            >
-              <source src={getMediaUrl(resource.url, resource.updatedAt)} type={resource.mimeType || 'video/mp4'} />
-            </video>
-          </div>
-        </div>
+          <source src={getMediaUrl(resource.url, resource.updatedAt)} type={resource.mimeType || 'video/mp4'} />
+        </video>
       </div>
     </div>
   )

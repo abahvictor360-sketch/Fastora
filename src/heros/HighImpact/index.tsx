@@ -10,8 +10,10 @@ import { HeroScrollVideo } from './HeroScrollVideo'
  * High-impact hero — dark navy, editorial, no imagery.
  * A soft gold glow sits behind the headline and an oversized
  * "FASTORA" wordmark anchors the section, mirroring the reference layout.
- * When a video is set on the hero, it's revealed below the wordmark and
- * scrubbed by scroll position rather than autoplaying (see HeroScrollVideo).
+ * When a video is set on the hero, it renders full-bleed (edge to edge)
+ * directly below the headline/CTAs — the first visual after the hero
+ * text — and is scrubbed by scroll position rather than autoplaying
+ * (see HeroScrollVideo).
  */
 export const HighImpactHero: React.FC<HeroData> = ({ links, media, richText }) => {
   return (
@@ -69,19 +71,19 @@ export const HighImpactHero: React.FC<HeroData> = ({ links, media, richText }) =
         </div>
       </div>
 
-      {/* oversized wordmark */}
-      <div
-        data-reveal="mask"
-        className="container relative z-10 select-none pb-10 md:pb-16"
-        aria-hidden="true"
-      >
-        <span className="block bg-gradient-to-b from-primary-foreground/90 to-primary-foreground/25 bg-clip-text text-[24vw] font-bold leading-none tracking-tighter text-transparent">
-          FASTORA
-        </span>
-      </div>
-
-      {media && typeof media === 'object' && media.mimeType?.includes('video') && (
+      {media && typeof media === 'object' && media.mimeType?.includes('video') ? (
         <HeroScrollVideo resource={media} />
+      ) : (
+        /* oversized wordmark — only shown when there's no hero video */
+        <div
+          data-reveal="mask"
+          className="container relative z-10 select-none pb-10 md:pb-16"
+          aria-hidden="true"
+        >
+          <span className="block bg-gradient-to-b from-primary-foreground/90 to-primary-foreground/25 bg-clip-text text-[24vw] font-bold leading-none tracking-tighter text-transparent">
+            FASTORA
+          </span>
+        </div>
       )}
     </section>
   )
