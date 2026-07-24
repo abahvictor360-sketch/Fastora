@@ -62,7 +62,6 @@ export default async function Nav() {
           Settings accent, so every "Save"/"Publish" button and link across
           the whole admin — not just this Nav — matches the live site. */}
       <style
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: `:root{--fastora-accent:${accent};--fastora-accent-hover:${accent};}`,
         }}

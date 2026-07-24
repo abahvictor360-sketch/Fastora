@@ -72,13 +72,11 @@ export default async function ServicePage({ params }: Args) {
 
   return (
     <article>
-      {/* eslint-disable-next-line react/no-danger */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
       {faqJsonLd && (
-        // eslint-disable-next-line react/no-danger
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

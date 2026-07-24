@@ -58,7 +58,6 @@ export default async function PostPage({ params }: Args) {
 
   return (
     <article className="pb-24">
-      {/* eslint-disable-next-line react/no-danger */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}

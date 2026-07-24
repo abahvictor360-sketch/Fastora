@@ -16,7 +16,6 @@ const BeforeLogin: React.FC = async () => {
   return (
     <>
       <style
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{
           __html: `:root{--fastora-accent:${accent};--fastora-accent-hover:${accent};}`,
         }}

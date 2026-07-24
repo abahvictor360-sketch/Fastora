@@ -20,7 +20,6 @@ export const FAQBlockComponent: React.FC<FAQBlockProps> = ({ eyebrow, heading, i
 
   return (
     <section className="container py-20 md:py-28">
-      {/* eslint-disable-next-line react/no-danger */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <div className="max-w-2xl">
         {eyebrow && (
