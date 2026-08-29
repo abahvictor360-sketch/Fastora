@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import React from 'react'
 
-import { getPosts, safely } from '@/lib/api'
+import { getPosts } from '@/lib/api'
+import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 import { Media } from '@/components/Media'
 import { NewsletterForm } from '@/components/NewsletterForm'
 import { PageHeader } from '@/components/PageHeader'
@@ -29,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function InsightsPage() {
   const [page, posts] = await Promise.all([
     queryUtilityPage('insights'),
-    safely(() => getPosts({ limit: 100 }), []),
+    resolveOrDefer(() => getPosts({ limit: 100 })),
   ])
 
   // At most one pinned post is featured up top; the rest of the grid never

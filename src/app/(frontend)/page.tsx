@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import React, { cache } from 'react'
 
-import { getPageBySlug, safely } from '@/lib/api'
+import { getPageBySlug } from '@/lib/api'
+import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 
-const queryHomePage = cache(async () => safely(() => getPageBySlug('home'), null))
+const queryHomePage = cache(async () => resolveOrDefer(() => getPageBySlug('home')))
 
 export default async function HomePage() {
   const page = await queryHomePage()

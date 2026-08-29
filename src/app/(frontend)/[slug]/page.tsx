@@ -6,6 +6,7 @@ import { getPageBySlug, getPageSlugs, safely } from '@/lib/api'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
+import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 
 // Slugs owned by dedicated route files (app/(frontend)/<slug>/page.tsx),
 // which need real logic — live collection queries, a form — that the
@@ -56,7 +57,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
 }
 
 /**
- * Deliberately not wrapped in safely().
+ * Wrapped in resolveOrDefer(), not safely().
  *
  * safely() returns null when the request fails, and null here means notFound().
  * That made an unreachable API indistinguishable from a page that does not
@@ -66,9 +67,11 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
  * minutes later.
  *
  * apiFetchOrNull already draws the distinction, returning null only when the
- * API genuinely answers 404 and throwing for anything else. Letting it throw
- * keeps "missing" and "unreachable" apart: the first 404s as it should, the
- * second surfaces as an error and is retried on the next request instead of
- * being cached as a permanent absence.
+ * API genuinely answers 404 and throwing for anything else — but letting that
+ * throw escape is fatal during a build, which is how /about took a whole deploy
+ * down. resolveOrDefer keeps the distinction and survives the build: a real 404
+ * still 404s, and an unreachable API defers the page to request time.
  */
-const queryPageBySlug = cache(async ({ slug }: { slug: string }) => getPageBySlug(slug))
+const queryPageBySlug = cache(async ({ slug }: { slug: string }) =>
+  resolveOrDefer(() => getPageBySlug(slug)),
+)

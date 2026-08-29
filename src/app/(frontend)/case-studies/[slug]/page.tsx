@@ -10,6 +10,7 @@ import { Media } from '@/components/Media'
 import { PageHeader } from '@/components/PageHeader'
 import { buildBreadcrumbs } from '@/utilities/breadcrumbs'
 import { generateMeta } from '@/utilities/generateMeta'
+import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 
 export async function generateStaticParams() {
   const studies = await safely(() => getCaseStudies(), [])
@@ -281,9 +282,10 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   return generateMeta({ doc: study, path: `/case-studies/${slug}` })
 }
 
-// Not wrapped in safely(), for the reason set out in app/(frontend)/[slug]:
+// Wrapped in resolveOrDefer(), for the reason set out in app/(frontend)/[slug]:
 // null here means notFound(), so swallowing a failed request turned a brief API
-// outage into a cached 404 on a page that exists.
+// outage into a cached 404 on a page that exists — while letting it throw took
+// the build down instead.
 const queryCaseStudyBySlug = cache(async ({ slug }: { slug: string }) =>
-  getCaseStudyBySlug(slug),
+  resolveOrDefer(() => getCaseStudyBySlug(slug)),
 )

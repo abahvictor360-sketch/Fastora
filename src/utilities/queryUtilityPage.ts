@@ -1,7 +1,8 @@
 import { cache } from 'react'
 
 import type { Page } from '@/lib/api'
-import { getPageBySlug, safely } from '@/lib/api'
+import { getPageBySlug } from '@/lib/api'
+import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 
 /**
  * Fetches a Pages document by slug for routes that render their own
@@ -9,5 +10,5 @@ import { getPageBySlug, safely } from '@/lib/api'
  * — used only to pull the CMS-editable `pageHeader` copy and SEO meta.
  */
 export const queryUtilityPage = cache(
-  async (slug: string): Promise<Page | null> => safely(() => getPageBySlug(slug), null),
+  async (slug: string): Promise<Page | null> => resolveOrDefer(() => getPageBySlug(slug)),
 )

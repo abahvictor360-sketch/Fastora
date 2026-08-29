@@ -12,6 +12,7 @@ import { ConsultationFormBlock } from '@/blocks/ConsultationForm/Component'
 import { buildBreadcrumbs } from '@/utilities/breadcrumbs'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getServerSideURL } from '@/utilities/getURL'
+import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 
 export async function generateStaticParams() {
   const services = await safely(() => getServices(), [])
@@ -333,9 +334,10 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   return generateMeta({ doc: service, path: `/services/${slug}` })
 }
 
-// Not wrapped in safely(), for the reason set out in app/(frontend)/[slug]:
+// Wrapped in resolveOrDefer(), for the reason set out in app/(frontend)/[slug]:
 // null here means notFound(), so swallowing a failed request turned a brief API
-// outage into a cached 404 on a page that exists.
+// outage into a cached 404 on a page that exists — while letting it throw took
+// the build down instead.
 const queryServiceBySlug = cache(async ({ slug }: { slug: string }) =>
-  getServiceBySlug(slug),
+  resolveOrDefer(() => getServiceBySlug(slug)),
 )
