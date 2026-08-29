@@ -11,6 +11,7 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { formatAuthors } from '@/utilities/formatAuthors'
 import { formatDateTime } from '@/utilities/formatDateTime'
 import { getServerSideURL } from '@/utilities/getURL'
+import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 
 export async function generateStaticParams() {
   const posts = await safely(() => getPosts(), [])
@@ -125,5 +126,5 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
 }
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) =>
-  safely(() => getPostBySlug(slug), null),
+  resolveOrDefer(() => getPostBySlug(slug)),
 )
