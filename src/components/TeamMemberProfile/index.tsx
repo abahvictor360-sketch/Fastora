@@ -1,12 +1,11 @@
 import Link from 'next/link'
-import Image from 'next/image'
-import { notFound } from 'next/navigation'
 import React from 'react'
 import { FaEnvelope } from 'react-icons/fa6'
 
-import { getTeamMember, isPublished } from '@/config/team'
-import { socialIcons, socialLabels } from '@/config/socials'
+import type { TeamMember } from '@/lib/api'
+import { Media } from '@/components/Media'
 import { PageHeader } from '@/components/PageHeader'
+import { socialIcons, socialLabels } from '@/config/socials'
 import { buildBreadcrumbs } from '@/utilities/breadcrumbs'
 import { getServerSideURL } from '@/utilities/getURL'
 
@@ -22,30 +21,21 @@ function initials(name: string): string {
 }
 
 /**
- * One person's page, rendered by the thin route file at /<slug>.
- *
- * Everything is local data, so unlike the rest of the site this page cannot be
- * taken down by the API being unreachable — which is rather the point of giving
- * someone a URL to put on a business card.
+ * One person's page, at /<slug>. Everything on it — name, role, bio, photo and
+ * which social buttons appear — is edited under Team in the admin.
  */
-export const TeamMemberProfile: React.FC<{ slug: string }> = ({ slug }) => {
-  const member = getTeamMember(slug)
-
-  // A member with no role and no bio has nothing to show; 404 rather than
-  // publish an empty profile. Filling in src/config/team.ts turns it on.
-  if (!member || !isPublished(member)) notFound()
-
+export const TeamMemberProfile: React.FC<{ member: TeamMember }> = ({ member }) => {
   const url = getServerSideURL()
 
   const personJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: member.name,
-    jobTitle: member.role,
-    description: member.bio,
+    ...(member.role ? { jobTitle: member.role } : {}),
+    ...(member.bio ? { description: member.bio } : {}),
     url: `${url}/${member.slug}`,
     worksFor: { '@type': 'ProfessionalService', name: 'Fastora', url },
-    ...(member.photo ? { image: `${url}${member.photo}` } : {}),
+    ...(member.photo?.url ? { image: member.photo.url } : {}),
     ...(member.socials.length ? { sameAs: member.socials.map((social) => social.url) } : {}),
   }
 
@@ -66,21 +56,14 @@ export const TeamMemberProfile: React.FC<{ slug: string }> = ({ slug }) => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      <PageHeader eyebrow="Team" title={member.name} description={member.role} />
+      <PageHeader eyebrow="Team" title={member.name} description={member.role || undefined} />
 
       <section className="container py-16 md:py-20">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[auto_1fr] lg:gap-16">
           <div data-reveal="up" className="shrink-0">
             {member.photo ? (
               <div className="h-40 w-40 overflow-hidden rounded-full md:h-48 md:w-48">
-                <Image
-                  src={member.photo}
-                  alt={member.name}
-                  width={192}
-                  height={192}
-                  className="h-full w-full object-cover"
-                  priority
-                />
+                <Media resource={member.photo} imgClassName="h-full w-full object-cover" />
               </div>
             ) : (
               <span
@@ -93,9 +76,11 @@ export const TeamMemberProfile: React.FC<{ slug: string }> = ({ slug }) => {
           </div>
 
           <div data-reveal-group="90">
-            <p data-reveal="up" className="max-w-2xl text-lg text-muted-foreground">
-              {member.bio}
-            </p>
+            {member.bio && (
+              <p data-reveal="up" className="max-w-2xl text-lg text-muted-foreground">
+                {member.bio}
+              </p>
+            )}
 
             {(member.socials.length > 0 || member.email) && (
               <div data-reveal="up" className="mt-10">
@@ -109,7 +94,7 @@ export const TeamMemberProfile: React.FC<{ slug: string }> = ({ slug }) => {
 
                     return (
                       <a
-                        key={social.platform}
+                        key={`${social.platform}-${social.url}`}
                         href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -155,26 +140,4 @@ export const TeamMemberProfile: React.FC<{ slug: string }> = ({ slug }) => {
       </section>
     </article>
   )
-}
-
-/** Metadata for a profile route, kept next to the page it describes. */
-export function teamMemberMetadata(slug: string) {
-  const member = getTeamMember(slug)
-  if (!member || !isPublished(member)) return { title: { absolute: 'Fastora' } }
-
-  const title = `${member.name}, ${member.role} | Fastora`
-  const description = member.bio
-
-  return {
-    title: { absolute: title },
-    description,
-    alternates: { canonical: `${getServerSideURL()}/${member.slug}` },
-    openGraph: {
-      title,
-      description,
-      url: `/${member.slug}`,
-      type: 'profile' as const,
-      ...(member.photo ? { images: [{ url: `${getServerSideURL()}${member.photo}` }] } : {}),
-    },
-  }
 }

@@ -5,10 +5,10 @@ import {
   getPages,
   getPosts,
   getServices,
+  getTeamMembers,
   safely,
 } from "@/lib/api";
 import { getServerSideURL } from "@/utilities/getURL";
-import { TEAM, isPublished } from "@/config/team";
 
 /**
  * Without this the sitemap is prerendered exactly once, at build time, and
@@ -33,6 +33,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     safely(() => getCaseStudies(), []),
   ]);
 
+  const teamMembers = await safely(() => getTeamMembers(), []);
+
   // Services and case studies are seeded and never legitimately all-empty, so
   // an empty sweep means the API failed rather than that the CMS is bare.
   // Say so loudly: the `safely` wrappers above have already swallowed the
@@ -52,10 +54,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModifiedFor = (slug: string) =>
     pages.find((page) => page.slug === slug)?.updatedAt ?? undefined;
 
-  // Local data, so these are listed unconditionally — they cannot be affected
-  // by the API sweep above.
-  const teamRoutes: MetadataRoute.Sitemap = TEAM.filter(isPublished).map((member) => ({
+  const teamRoutes: MetadataRoute.Sitemap = teamMembers.map((member) => ({
     url: `${url}/${member.slug}`,
+    lastModified: member.updatedAt ?? undefined,
     changeFrequency: "yearly" as const,
     priority: 0.5,
   }));

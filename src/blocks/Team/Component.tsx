@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
 
-import type { Media as MediaType } from '@/lib/api'
+import type { Media as MediaType, TeamMember } from '@/lib/api'
+import { getTeamMembers, safely } from '@/lib/api'
 import { Media } from '@/components/Media'
 import { SectionHeading } from '@/components/SectionHeading'
-import { profilePathForName } from '@/config/team'
 
 type Member = {
   name: string
@@ -36,8 +36,24 @@ function initials(name: string): string {
  * brand-tinted circle, so the section can go live before headshots are
  * collected — the same reasoning TrustedBy applies to a client with no logo.
  */
-export const TeamBlock: React.FC<Props> = ({ eyebrow, heading, description, members }) => {
+export const TeamBlock: React.FC<Props> = async ({ eyebrow, heading, description, members }) => {
   if (!members?.length) return null
+
+  // Profiles are keyed by name rather than by a field on the block, so giving
+  // someone a page under Team is all it takes for their card here to link to it.
+  const profiles = await safely(() => getTeamMembers(), [] as TeamMember[])
+
+  // Word order is not part of the match: the grid here says "Ndidiamaka Eya"
+  // while her profile says "Eya Ndidiamaka", and both are how she is introduced
+  // in different places. Comparing the set of words rather than the string means
+  // either can be re-edited without the link silently disappearing.
+  const nameKey = (name: string): string =>
+    name.trim().toLowerCase().split(/\s+/).filter(Boolean).sort().join(' ')
+
+  const pathForName = (name: string): string | null => {
+    const match = profiles.find((profile) => nameKey(profile.name) === nameKey(name))
+    return match ? `/${match.slug}` : null
+  }
 
   return (
     <section className="container py-12 md:py-16">
@@ -52,7 +68,7 @@ export const TeamBlock: React.FC<Props> = ({ eyebrow, heading, description, memb
         {members.map((member, i) => {
           // Members with a page of their own get a linked card; the rest stay
           // static, so the grid works whether or not a profile exists.
-          const href = profilePathForName(member.name)
+          const href = pathForName(member.name)
 
           const content = (
             <>
