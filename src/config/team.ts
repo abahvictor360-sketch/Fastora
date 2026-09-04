@@ -53,14 +53,15 @@ export const TEAM: TeamMember[] = [
     socials: [],
   },
   {
+    // Emmanuel goes by Genesis, so the URL is /genesis while the page and the
+    // About grid both carry the name his colleagues and clients see in writing.
     slug: 'genesis',
-    name: 'Genesis',
-    // Nobody by this name appears in the CMS team grid or anywhere in either
-    // repository, so there is no copy to carry over. The page 404s until a role
-    // and bio are filled in here — better than publishing a hollow profile of a
-    // real person.
-    role: '',
-    bio: '',
+    name: 'Emmanuel Akaluese',
+    role: 'Operations Associate',
+    bio:
+      'Emmanuel helps keep projects moving from idea to delivery. He supports internal ' +
+      'operations, coordinates workflows, and ensures client projects stay organised, ' +
+      'efficient, and on schedule.',
     socials: [],
   },
   {
