@@ -1,42 +1,12 @@
 import Link from 'next/link'
 import React from 'react'
-import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaThreads,
-  FaTiktok,
-  FaWhatsapp,
-  FaXTwitter,
-  FaYoutube,
-} from 'react-icons/fa6'
 
 import { DEFAULT_NAV, DEFAULT_SITE_SETTINGS, getFooter, getSiteSettings, safely } from '@/lib/api'
+import { socialIcons, socialLabels } from '@/config/socials'
 import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
 import { NewsletterForm } from '@/components/NewsletterForm'
 
-const socialLabels: Record<string, string> = {
-  instagram: 'Instagram',
-  twitter: 'X (Twitter)',
-  linkedin: 'LinkedIn',
-  tiktok: 'TikTok',
-  youtube: 'YouTube',
-  facebook: 'Facebook',
-  threads: 'Threads',
-  whatsapp: 'WhatsApp',
-}
-
-const socialIcons: Record<string, React.ComponentType<{ className?: string }>> = {
-  instagram: FaInstagram,
-  twitter: FaXTwitter,
-  linkedin: FaLinkedin,
-  tiktok: FaTiktok,
-  youtube: FaYoutube,
-  facebook: FaFacebook,
-  threads: FaThreads,
-  whatsapp: FaWhatsapp,
-}
 
 export async function Footer() {
   const footerData = await safely(() => getFooter(), DEFAULT_NAV)
