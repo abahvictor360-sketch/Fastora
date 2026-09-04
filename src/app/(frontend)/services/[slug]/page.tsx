@@ -12,6 +12,7 @@ import { ConsultationFormBlock } from '@/blocks/ConsultationForm/Component'
 import { buildBreadcrumbs } from '@/utilities/breadcrumbs'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getServerSideURL } from '@/utilities/getURL'
+import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 
 export async function generateStaticParams() {
   const services = await safely(() => getServices(), [])
@@ -334,5 +335,5 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
 }
 
 const queryServiceBySlug = cache(async ({ slug }: { slug: string }) =>
-  safely(() => getServiceBySlug(slug), null),
+  resolveOrDefer(() => getServiceBySlug(slug)),
 )

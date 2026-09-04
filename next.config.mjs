@@ -88,6 +88,25 @@ const contentSecurityPolicy = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /**
+   * How hard the build leans on the API while generating pages.
+   *
+   * Next defaults to one worker per CPU, which on the deploy machine meant 19
+   * of them requesting from the Laravel backend at once. That backend is on
+   * shared hosting, and it answered a share of that burst with 500s — the same
+   * paths served fine seconds later, so this is load, not broken content.
+   *
+   * The site is thirty-odd pages. Generating them in one worker at a time
+   * costs a few seconds of build time and keeps the request rate to something
+   * shared hosting can actually serve; `staticGenerationRetryCount` then gives
+   * any page that still trips a second attempt before the build gives up.
+   */
+  experimental: {
+    staticGenerationRetryCount: 2,
+    staticGenerationMaxConcurrency: 4,
+    staticGenerationMinPagesPerWorker: 50,
+  },
+
+  /**
    * Security headers on every response.
    *
    * These belong in the app rather than the host's config because the frontend is

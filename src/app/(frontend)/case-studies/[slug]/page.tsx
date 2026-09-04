@@ -10,6 +10,7 @@ import { Media } from '@/components/Media'
 import { PageHeader } from '@/components/PageHeader'
 import { buildBreadcrumbs } from '@/utilities/breadcrumbs'
 import { generateMeta } from '@/utilities/generateMeta'
+import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 
 export async function generateStaticParams() {
   const studies = await safely(() => getCaseStudies(), [])
@@ -282,5 +283,5 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
 }
 
 const queryCaseStudyBySlug = cache(async ({ slug }: { slug: string }) =>
-  safely(() => getCaseStudyBySlug(slug), null),
+  resolveOrDefer(() => getCaseStudyBySlug(slug)),
 )

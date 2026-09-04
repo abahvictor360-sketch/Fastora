@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import React, { cache } from 'react'
 
 import { getPageBySlug, getPageSlugs, safely } from '@/lib/api'
+import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
@@ -56,5 +57,5 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
 }
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) =>
-  safely(() => getPageBySlug(slug), null),
+  resolveOrDefer(() => getPageBySlug(slug)),
 )
