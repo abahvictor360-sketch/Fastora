@@ -196,6 +196,29 @@ export interface Post {
   meta: Meta
 }
 
+export interface TeamMemberSocial {
+  /** One of the platforms src/config/socials.ts knows an icon and label for. */
+  platform: string
+  url: string
+}
+
+export interface TeamMember {
+  id: number
+  name: string
+  /** The URL this person's page lives at: /kator, /genesis, /ndidiamaka. */
+  slug: string
+  role: string | null
+  bio: string | null
+  photo: Media | null
+  email: string | null
+  /** Already filtered server-side, so every entry has both a platform and a URL. */
+  socials: TeamMemberSocial[]
+  order: number
+  status: string
+  updatedAt: string | null
+  meta: Meta
+}
+
 export interface Testimonial {
   id: number
   quote: string
@@ -389,6 +412,10 @@ export const getTestimonials = (params?: {
   const suffix = qs.toString() ? `?${qs}` : ''
   return apiFetch<Testimonial[]>(`/testimonials${suffix}`)
 }
+
+export const getTeamMembers = () => apiFetch<TeamMember[]>('/team-members')
+export const getTeamMemberBySlug = (slug: string) =>
+  apiFetchOrNull<TeamMember>(`/team-members/${slug}`)
 
 export const getPages = () => apiFetch<Page[]>('/pages')
 export const getPageBySlug = (slug: string) => apiFetchOrNull<Page>(`/pages/${slug}`)

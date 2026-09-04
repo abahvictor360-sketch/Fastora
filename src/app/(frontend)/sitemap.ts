@@ -5,6 +5,7 @@ import {
   getPages,
   getPosts,
   getServices,
+  getTeamMembers,
   safely,
 } from "@/lib/api";
 import { getServerSideURL } from "@/utilities/getURL";
@@ -32,6 +33,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     safely(() => getCaseStudies(), []),
   ]);
 
+  const teamMembers = await safely(() => getTeamMembers(), []);
+
   // Services and case studies are seeded and never legitimately all-empty, so
   // an empty sweep means the API failed rather than that the CMS is bare.
   // Say so loudly: the `safely` wrappers above have already swallowed the
@@ -50,6 +53,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // exists, so listing them here costs nothing compared with the CMS sweep.
   const lastModifiedFor = (slug: string) =>
     pages.find((page) => page.slug === slug)?.updatedAt ?? undefined;
+
+  const teamRoutes: MetadataRoute.Sitemap = teamMembers.map((member) => ({
+    url: `${url}/${member.slug}`,
+    lastModified: member.updatedAt ?? undefined,
+    changeFrequency: "yearly" as const,
+    priority: 0.5,
+  }));
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -141,6 +151,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
+    ...teamRoutes,
     ...serviceRoutes,
     ...caseStudyRoutes,
     ...postRoutes,
