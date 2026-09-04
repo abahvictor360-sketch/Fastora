@@ -7,7 +7,7 @@ import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 import { Media } from '@/components/Media'
 import { PageHeader } from '@/components/PageHeader'
 import { FAQBlockComponent } from '@/blocks/FAQ/Component'
-import { generateMeta } from '@/utilities/generateMeta'
+import { generateUtilityPageMeta } from '@/utilities/generateMeta'
 import { queryUtilityPage } from '@/utilities/queryUtilityPage'
 
 const FALLBACK = {
@@ -18,11 +18,9 @@ const FALLBACK = {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await queryUtilityPage('services')
-  return generateMeta({
-    doc: page || {
-      meta: { title: 'Services', description: FALLBACK.description, image: null, canonicalUrl: null, noindex: false },
-    },
+  return generateUtilityPageMeta({
+    page: await queryUtilityPage('services'),
+    fallback: { title: 'Services', description: FALLBACK.description },
     path: '/services',
   })
 }

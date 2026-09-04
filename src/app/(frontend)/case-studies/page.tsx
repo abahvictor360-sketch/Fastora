@@ -6,7 +6,7 @@ import { getCaseStudies } from '@/lib/api'
 import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 import { Media } from '@/components/Media'
 import { PageHeader } from '@/components/PageHeader'
-import { generateMeta } from '@/utilities/generateMeta'
+import { generateUtilityPageMeta } from '@/utilities/generateMeta'
 import { queryUtilityPage } from '@/utilities/queryUtilityPage'
 
 const FALLBACK = {
@@ -16,11 +16,9 @@ const FALLBACK = {
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await queryUtilityPage('case-studies')
-  return generateMeta({
-    doc: page || {
-      meta: { title: 'Case Studies', description: FALLBACK.description, image: null, canonicalUrl: null, noindex: false },
-    },
+  return generateUtilityPageMeta({
+    page: await queryUtilityPage('case-studies'),
+    fallback: { title: 'Case Studies', description: FALLBACK.description },
     path: '/case-studies',
   })
 }

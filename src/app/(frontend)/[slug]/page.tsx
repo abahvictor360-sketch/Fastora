@@ -56,6 +56,22 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
   return generateMeta({ doc: page, path: `/${slug}` })
 }
 
+/**
+ * Deliberately not wrapped in safely().
+ *
+ * safely() returns null when the request fails, and null here means notFound().
+ * That made an unreachable API indistinguishable from a page that does not
+ * exist, so a momentary blip on the API host turned into a 404 — which Next
+ * then cached for the revalidate window. Live pages disappeared this way:
+ * /about, /terms-of-use and /cookie-policy all 404ed and recovered on their own
+ * minutes later.
+ *
+ * apiFetchOrNull already draws the distinction, returning null only when the
+ * API genuinely answers 404 and throwing for anything else. resolveOrDefer
+ * takes that a step further for prerendering specifically: instead of the
+ * throw failing the whole build, it defers this page to request time and
+ * retries once there, by which point the API is almost always back.
+ */
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) =>
   resolveOrDefer(() => getPageBySlug(slug)),
 )
