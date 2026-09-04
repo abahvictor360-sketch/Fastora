@@ -6,13 +6,24 @@ import { getPageBySlug, getPageSlugs, safely } from '@/lib/api'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
+import { TEAM_SLUGS } from '@/config/team'
 import { resolveOrDefer } from '@/utilities/resolveOrDefer'
 
 // Slugs owned by dedicated route files (app/(frontend)/<slug>/page.tsx),
 // which need real logic — live collection queries, a form — that the
 // block-based layout can't express. Their Pages documents exist only to
 // make the header copy CMS-editable; this catch-all must never render them.
-const RESERVED_SLUGS = ['home', 'services', 'case-studies', 'contact', 'insights', 'login']
+const RESERVED_SLUGS = [
+  'home',
+  'services',
+  'case-studies',
+  'contact',
+  'insights',
+  'login',
+  // The team profile pages at /kator, /genesis, /ndidiamaka own their own
+  // route files and read from src/config/team.ts, not the CMS.
+  ...TEAM_SLUGS,
+]
 
 export async function generateStaticParams() {
   const slugs = await safely(() => getPageSlugs(), [])

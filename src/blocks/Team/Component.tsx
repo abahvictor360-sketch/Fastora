@@ -1,8 +1,10 @@
+import Link from 'next/link'
 import React from 'react'
 
 import type { Media as MediaType } from '@/lib/api'
 import { Media } from '@/components/Media'
 import { SectionHeading } from '@/components/SectionHeading'
+import { profilePathForName } from '@/config/team'
 
 type Member = {
   name: string
@@ -47,30 +49,52 @@ export const TeamBlock: React.FC<Props> = ({ eyebrow, heading, description, memb
       )}
 
       <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group="120">
-        {members.map((member, i) => (
-          <div
-            key={i}
-            data-reveal="up"
-            className="rounded-3xl border border-border bg-card p-8"
-          >
-            {member.photo && typeof member.photo === 'object' ? (
-              <div className="h-28 w-28 overflow-hidden rounded-full">
-                <Media resource={member.photo} imgClassName="h-full w-full object-cover" />
-              </div>
-            ) : (
-              <span
-                aria-hidden="true"
-                className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-secondary/15 text-2xl font-semibold text-secondary"
-              >
-                {initials(member.name)}
-              </span>
-            )}
+        {members.map((member, i) => {
+          // Members with a page of their own get a linked card; the rest stay
+          // static, so the grid works whether or not a profile exists.
+          const href = profilePathForName(member.name)
 
-            <h3 className="mt-5 text-lg font-semibold">{member.name}</h3>
-            {member.role && <p className="mt-0.5 text-sm text-secondary">{member.role}</p>}
-            {member.bio && <p className="mt-3 text-sm text-muted-foreground">{member.bio}</p>}
-          </div>
-        ))}
+          const content = (
+            <>
+              {member.photo && typeof member.photo === 'object' ? (
+                <div className="h-28 w-28 overflow-hidden rounded-full">
+                  <Media resource={member.photo} imgClassName="h-full w-full object-cover" />
+                </div>
+              ) : (
+                <span
+                  aria-hidden="true"
+                  className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-secondary/15 text-2xl font-semibold text-secondary"
+                >
+                  {initials(member.name)}
+                </span>
+              )}
+
+              <h3 className="mt-5 text-lg font-semibold">{member.name}</h3>
+              {member.role && <p className="mt-0.5 text-sm text-secondary">{member.role}</p>}
+              {member.bio && <p className="mt-3 text-sm text-muted-foreground">{member.bio}</p>}
+            </>
+          )
+
+          const className = 'block rounded-3xl border border-border bg-card p-8'
+
+          return href ? (
+            <Link
+              key={i}
+              href={href}
+              data-reveal="up"
+              className={`${className} transition-colors hover:border-secondary/40 hover:bg-background`}
+            >
+              {content}
+              <span className="mt-4 inline-block text-sm font-medium text-secondary">
+                View profile
+              </span>
+            </Link>
+          ) : (
+            <div key={i} data-reveal="up" className={className}>
+              {content}
+            </div>
+          )
+        })}
       </div>
     </section>
   )

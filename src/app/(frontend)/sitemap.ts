@@ -8,6 +8,7 @@ import {
   safely,
 } from "@/lib/api";
 import { getServerSideURL } from "@/utilities/getURL";
+import { TEAM, isPublished } from "@/config/team";
 
 /**
  * Without this the sitemap is prerendered exactly once, at build time, and
@@ -50,6 +51,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // exists, so listing them here costs nothing compared with the CMS sweep.
   const lastModifiedFor = (slug: string) =>
     pages.find((page) => page.slug === slug)?.updatedAt ?? undefined;
+
+  // Local data, so these are listed unconditionally — they cannot be affected
+  // by the API sweep above.
+  const teamRoutes: MetadataRoute.Sitemap = TEAM.filter(isPublished).map((member) => ({
+    url: `${url}/${member.slug}`,
+    changeFrequency: "yearly" as const,
+    priority: 0.5,
+  }));
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -141,6 +150,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticRoutes,
+    ...teamRoutes,
     ...serviceRoutes,
     ...caseStudyRoutes,
     ...postRoutes,
